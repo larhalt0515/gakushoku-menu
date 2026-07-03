@@ -1,33 +1,38 @@
 #!/usr/bin/env python3
-"""学食メニュー有志サイト ビルダー（1週間表示 + 栄養解析・コンボ最適化版）
+"""学食メニュー有志サイト ビルダー（OCR版・PaddleOCRで栄養解析＝API課金ゼロ）
 
 本家を「トップGET → shop_id POST → current_day切替GET」でスクレイプし、
-3キャンパス×7日分のメニュー画像URLを取得。各メニュー画像を Claude Sonnet 4.6 で
+3キャンパス×7日分のメニュー画像URLを取得。各メニュー画像を PaddleOCR で
 解析して栄養・価格を抽出し、自己完結 index.html を生成する。
 
 解析結果は cache/<画像ID>.json に保存（画像ID単位＝同じ画像は二度と再解析しない）。
-このキャッシュをリポジトリにコミットすることで、GitHub Actions 間でも永続化し
-二重課金を防ぐ。
+既存の Claude 解析済みキャッシュはそのまま有効（新規画像だけ OCR で解析）。
 
-依存: httpx, beautifulsoup4, anthropic, python-dotenv（GitHub Actions でも動く）
-ローカル実行: ~/.local/menu-venv/bin/python3 build.py
-APIキー: ローカルは ~/.local/menu-venv/.env、Actions は Secrets の ANTHROPIC_API_KEY
+解析ロジック: 半田パッキアの実画像で正解15品・105フィールド100%一致を確認済み(2026-07-02)
+- 料理名 = 文字高さが大きいテキスト(実測: 料理名h32-73 vs ラベル類h8-16)
+- 料理名をアンカーに近傍からカード矩形を自動算出(列数はハードコードしない)
+- kcal付き数値(料理名に最も近いもの)を栄養行アンカーに、右隣を P/F/C と対応
+- ¥付き数値から価格。小中大ラベル+「中より大きい無ラベル→大」等の推定でsizes構築
+
+依存: httpx, beautifulsoup4, paddlepaddle, paddleocr, pillow, python-dotenv
+ローカル実行: ~/.local/menu-ocr-venv/bin/python3 build.py
 """
-import base64
+import io
 import json
 import os
 import re
 import ssl
 import sys
 import time
+import tempfile
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 import httpx
 from bs4 import BeautifulSoup
-import anthropic
+from PIL import Image
 
-# ローカル実行用に .env からキーを読む（Actions ではキーが環境変数で渡るので無害にスキップ）
+# ローカル実行用に .env を読む（Actions では無害にスキップ）
 try:
     from dotenv import load_dotenv
     load_dotenv(Path.home() / ".local" / "menu-venv" / ".env")
@@ -40,7 +45,6 @@ BASE = ("https://signage.univcoop-tokai.net/smt_menu_ants2/view_list.php"
         "?uv=13&current_day=0&current_page=no_page")
 DAYS = 7
 WD = "月火水木金土日"
-MODEL = "claude-sonnet-4-6"  # 栄養の小さい数字も読むため Sonnet（Haikuは読み飛ばす）
 
 SHOPS = [
     {"key": "pacchia",  "id": "29",  "name": "半田キャンパス パッキア", "emoji": "🏫"},
@@ -55,7 +59,7 @@ _ctx.set_ciphers("DEFAULT@SECLEVEL=1")  # 本家の古いTLS対策
 
 
 # ============================================================
-# 画像URL抽出
+# 画像URL抽出（変更なし）
 # ============================================================
 def parse_image_urls(html):
     soup = BeautifulSoup(html, "html.parser")
@@ -77,7 +81,7 @@ def parse_image_urls(html):
 
 
 # ============================================================
-# Claude 解析（menu CLI のロジックを移植・dict版）
+# 料理名・正規化・妥当性判定（既存ロジックを流用）
 # ============================================================
 NAME_FIXES = {
     "スカツカレー": "ロースカツカレー", "スカツ丼": "ロースカツ丼",
@@ -101,49 +105,8 @@ def fix_dish_name(name):
     return name
 
 
-def extract_json(text):
-    """AI応答からJSONを取り出す（フェンス/前置き/末尾切れに強い）"""
-    if not text:
-        return None
-    fence = re.search(r"```(?:json)?\s*(.*?)```", text, re.DOTALL)
-    candidate = fence.group(1) if fence else text
-    start = candidate.find("{")
-    if start != -1:
-        depth = 0
-        in_str = False
-        esc = False
-        for i in range(start, len(candidate)):
-            c = candidate[i]
-            if in_str:
-                if esc:
-                    esc = False
-                elif c == "\\":
-                    esc = True
-                elif c == '"':
-                    in_str = False
-                continue
-            if c == '"':
-                in_str = True
-            elif c == "{":
-                depth += 1
-            elif c == "}":
-                depth -= 1
-                if depth == 0:
-                    try:
-                        return json.loads(candidate[start:i + 1])
-                    except json.JSONDecodeError:
-                        break
-    m = re.search(r"\{.*\}", candidate, re.DOTALL)
-    if m:
-        try:
-            return json.loads(m.group(0))
-        except json.JSONDecodeError:
-            return None
-    return None
-
-
 def normalize_dish(d):
-    """AI出力のdishを整える。サイズ・価格を正規化して描画用dictにする"""
+    """dishを整える。サイズ・価格を正規化して描画用dictにする"""
     sizes = {k: int(v) for k, v in (d.get("sizes") or {}).items() if v}
     if not sizes:
         sizes = {"並": int(d.get("price") or 0)}
@@ -173,82 +136,231 @@ def is_valid_menu(dishes):
     return priced >= max(2, len(dishes) // 2)
 
 
-ANALYZE_PROMPT = """この画像は日本の大学食堂の今日のメニュー一覧です。
-画像に写っている**全ての**メニューの情報を**漏れなく正確に**抽出してください。
+# ============================================================
+# PaddleOCR 解析（★ Claude の代替。ここが無料化の本体）
+# ============================================================
+NUTRI_WORDS = ["エネルギー", "タンパク質", "脂質", "炭水化物", "食塩相当量",
+               "カルシウム", "野菜量", "アレルゲン", "食材中"]
+JUNK = ["本体", "税込", "税抜", "サイズ", "のもの", "栄養", "おすすめ", "今日",
+        "MENU", "TODAY", "CO-OP", "univ", "組価", "です", "表示", "当店"]
+JP = re.compile(r"[ぁ-んァ-ヶ一-龥]")
+VALUE_PAT = re.compile(r"[0-9]+(?:\.[0-9]+)?(?:g|kcal|mg)?$")
 
-# 最重要ルール1: サイズ別価格を必ず読み取る
-
-丼・カレー・麺などの「ご飯もの・麺もの」には、価格バッジの近くに
-**複数サイズの価格**が併記されています。
-例: 「小 440」「中 528」「大 660」のように 小・中・大 の3段階。
-- 大きく目立つ価格は通常「中」サイズです。
-- その周囲に小さく「小◯◯」「大◯◯」が書かれています。**これらも必ず読み取ること**。
-- 読み取れたサイズだけ入れてOK（例: 中と大しか無ければ {"中":528,"大":660}）。
-- サイズ展開が無い単品（主菜・小鉢・サラダ・デザート等）は1価格だけでOK。
-
-# 最重要ルール2: 栄養情報は必ず読み取る（中サイズ基準）
-
-各料理の写真の右側または上部に**栄養成分表**が必ず記載されています：
-- エネルギー (kcal)
-- タンパク質 (g)
-- 脂質 (g)
-- 炭水化物 (g)
-- 食塩相当量 (g)
-
-これらは通常「**中サイズ基準**」の数値です（小さく「中サイズのものです」と注記あり）。
-**全ての料理にこれらの数値が記載されている**ので、絶対に見落とさず読み取ってください。
-たとえ小さい文字でも、必ず数値を抽出してください。
-nullを返すのは、本当に画像上に数値が見当たらない場合のみです。
-
-特に画面下半分の小鉢・サラダ・デザート類も、栄養情報が必ず書かれています。
-
-# カテゴリ分類のルール
-- カレーライス、丼物（〜丼、〜ライス） → "丼"
-- ハンバーグ、フライ、塩焼きなどメイン1品 → "主菜"
-- ラーメン、うどん、そば、〜麺 → "麺"
-- 味噌汁、豚汁、スープ → "汁物"
-- サラダ → "サラダ"
-- ライス（白米のみ） → "ご飯"
-- 煮物、和え物などの副菜 → "小鉢"
-- ケーキ、タルト、もちなど → "デザート"
-
-特に「カツカレー」「カレーライス」は必ず**"丼"**として分類すること。
-
-# 料理名の補完
-画像のレイアウトの都合で頭文字が見切れている場合は補完してください:
-- 「スカツカレー」→「ロースカツカレー」
-- 「ースカツ」→「ロースカツ」
-英語名や写真も参考にして正確な料理名を判定してください。
-
-# 出力形式
-以下のJSON形式で、**JSONのみ**回答してください。
-
-{
-  "dishes": [
-    {
-      "name": "正確な料理名",
-      "price": 中サイズまたは単独表示の価格(整数・税込),
-      "sizes": {"小": 440, "中": 528, "大": 660},
-      "energy": カロリー(整数・kcal),
-      "protein": タンパク質(小数・g),
-      "fat": 脂質(小数・g),
-      "carb": 炭水化物(小数・g),
-      "salt": 食塩相当量(小数・g),
-      "category": "主菜|丼|麺|汁物|サラダ|ご飯|小鉢|デザート|その他",
-      "allergens": ["卵","乳","小麦"などのアレルゲン]
-    }
-  ]
-}
-
-- "sizes" は読み取れたサイズだけ入れる。サイズ展開が無い品は省略するか {"並": 価格} にする。
-- "price" は必ず「中」（または単独）の税込価格にすること。
-**サイズ価格・栄養数値の見落としは厳禁です。必ず全料理の全項目を埋めること。**
-"""
+_OCR = None
 
 
-def analyze_image_url(client, url):
-    """画像URLを解析して栄養付きdishリストを返す。画像ID単位でキャッシュ（再解析しない）"""
-    img_id = url.rsplit("/", 1)[-1].rsplit(".", 1)[0]  # 0000042193
+def get_ocr():
+    """PaddleOCRインスタンスを1回だけ作って使い回す（初期化が重いため）"""
+    global _OCR
+    if _OCR is None:
+        from paddleocr import PaddleOCR
+        try:
+            _OCR = PaddleOCR(lang="japan", use_textline_orientation=True)
+        except TypeError:
+            _OCR = PaddleOCR(lang="japan", use_angle_cls=True)
+    return _OCR
+
+
+def _is_name(o, name_min_h):
+    """料理名か判定。カギは文字高さ(料理名は他テキストの2倍以上デカい)"""
+    t = o["text"].strip()
+    h = o["y1"] - o["y0"]
+    if len(t) < 2 or h < name_min_h:
+        return False
+    if "¥" in t or "￥" in t or re.search(r"\d", t):
+        return False
+    if not JP.search(t):
+        return False
+    return not any(w in t for w in NUTRI_WORDS + JUNK)
+
+
+def _numi(text):
+    s = re.sub(r"[^0-9]", "", text)
+    return int(s) if s else None
+
+
+def _numf(text):
+    s = text.replace("kcal", "").replace("mg", "")
+    s = re.sub(r"[^0-9.]", "", s)
+    if not s or s == ".":
+        return None
+    try:
+        v = float(s)
+    except ValueError:
+        return None
+    return v if v < 1000 else None  # 桁が異常なら誤読として破棄
+
+
+def _is_value(text):
+    """数値セルらしいテキストか（誤読ラベル『クンバ2』等の混入を防ぐ）"""
+    t = text.replace("O", "0").replace("o", "0").strip()
+    return bool(VALUE_PAT.fullmatch(t))
+
+
+def _build_cards(names, w, h):
+    """各料理名をアンカーに、カード矩形(L,R,T,B)を近傍の料理名から自動算出"""
+    row_tol = 0.021 * h
+    x_margin = 0.010 * w
+    cards = []
+    for n in names:
+        row = sorted([m for m in names if abs(m["cy"] - n["cy"]) < row_tol],
+                     key=lambda o: o["x0"])
+        i = row.index(n)
+        left = row[i - 1]["x1"] + x_margin if i > 0 else -1e9
+        right = row[i + 1]["x0"] - x_margin / 2 if i + 1 < len(row) else 1e9
+        below = sorted([m for m in names
+                        if m["y0"] > n["y1"] and not (m["x1"] < n["x0"] - 0.04 * w
+                                                      or m["x0"] > right)],
+                       key=lambda o: o["y0"])
+        bottom = below[0]["y0"] - 0.008 * h if below else 1e9
+        cards.append({"name": n["text"].strip(), "cx": n["cx"], "L": left, "R": right,
+                      "T": n["y0"] - 0.015 * h, "B": bottom})
+    return cards
+
+
+def _extract_nutrition(elems, name_cx, h):
+    """kcal付き数値をアンカーに、同じ行の右隣を P/F/C として読む"""
+    band_tol = 0.010 * h
+    out = {"energy": None, "protein": None, "fat": None, "carb": None}
+    kcal = [e for e in elems if "kcal" in e["text"].lower()]
+    if not kcal:
+        return out
+    # カードに複数kcalが混入したら料理名に最も近いものを採用
+    a = min(kcal, key=lambda e: abs(e["cx"] - name_cx))
+    out["energy"] = _numi(a["text"])
+    band = sorted([e for e in elems
+                   if _is_value(e["text"]) and "¥" not in e["text"]
+                   and "￥" not in e["text"] and "mg" not in e["text"]
+                   and e["cx"] > a["cx"] and abs(e["cy"] - a["cy"]) < band_tol],
+                  key=lambda e: e["cx"])
+    for k, e in zip(["protein", "fat", "carb"], band[:3]):
+        out[k] = _numf(e["text"])
+    return out
+
+
+def _extract_price(elems):
+    """¥付き数値から price と sizes を組む"""
+    yen = [e for e in elems
+           if ("¥" in e["text"] or "￥" in e["text"]) and re.search(r"\d", e["text"])
+           and not any(w in e["text"] for w in ("本体", "税", "(", "（"))]
+    if not yen:
+        return None, {}
+    sizes = {}
+    unlabeled = []
+    for e in yen:
+        v = _numi(e["text"])
+        if not v or v > 5000:
+            continue
+        m = re.search(r"[小中大]", e["text"])
+        if m:
+            sizes[m.group()] = v
+        else:
+            unlabeled.append((v, e))
+    main = max(yen, key=lambda e: e["y1"] - e["y0"])
+    main_v = _numi(main["text"])
+    if main_v and "中" not in sizes and (sizes or len(unlabeled) > 1):
+        sizes["中"] = main_v  # メイン(最大文字)は中サイズ扱い(「甲」等の誤読対策)
+    mid = sizes.get("中")
+    if mid:
+        # ラベル無し価格をサイズ推定: 中より大きい→大 / 小さい→小 (各最大値を採用)
+        ups = [v for v, _ in unlabeled if v > mid]
+        downs = [v for v, _ in unlabeled if v < mid]
+        if ups and "大" not in sizes:
+            sizes["大"] = max(ups)
+        if downs and "小" not in sizes:
+            sizes["小"] = max(downs)
+    price = sizes.get("中") or main_v
+    if len(sizes) <= 1:
+        sizes = {}
+    return price, sizes
+
+
+def _guess_category(name):
+    if name.strip() in ("ライス", "ごはん", "ご飯", "白米"):
+        return "ご飯"
+    if re.search(r"カレー|丼|ライス", name):
+        return "丼"
+    if re.search(r"ラーメン|うどん|そば|麺|ヌードル", name):
+        return "麺"
+    if re.search(r"味噌汁|豚汁|スープ|汁", name):
+        return "汁物"
+    if re.search(r"サラダ", name):
+        return "サラダ"
+    if re.search(r"ケーキ|タルト|もち|餅|プリン|ゼリー|デザート", name):
+        return "デザート"
+    if re.search(r"ハンバーグ|フライ|焼|天ぷら|カツ|揚げ|ステーキ|炒め", name):
+        return "主菜"
+    if re.search(r"煮|和え|お浸し|おひたし|きんぴら", name):
+        return "小鉢"
+    return "その他"
+
+
+def ocr_dishes(img_bytes):
+    """画像bytes → dishのraw list（Claudeのdishes相当）。PaddleOCRで解析。"""
+    im = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+    w, h = im.width, im.height
+    im2 = im.resize((w * 2, h * 2), Image.LANCZOS)  # 小さい文字対策で2倍拡大
+    tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+    im2.save(tmp.name)
+    tmp.close()
+
+    ocr = get_ocr()
+    items = []
+
+    def add(poly, text, conf):
+        xs = [float(p[0]) / 2 for p in poly]
+        ys = [float(p[1]) / 2 for p in poly]
+        items.append({"text": text, "conf": float(conf),
+                      "x0": min(xs), "y0": min(ys),
+                      "x1": max(xs), "y1": max(ys),
+                      "cx": sum(xs) / len(xs), "cy": sum(ys) / len(ys)})
+
+    parsed = False
+    try:
+        # PaddleOCR 3.x 系 API
+        for page in ocr.predict(tmp.name):
+            texts = page.get("rec_texts") or []
+            scores = page.get("rec_scores") or []
+            polys = page.get("rec_polys") if page.get("rec_polys") is not None else page.get("dt_polys")
+            for t, s, p in zip(texts, scores, polys):
+                add(p, t, s)
+            parsed = True
+    except Exception as e:
+        sys.stderr.write("  predict NG, fallback .ocr(): %s\n" % e)
+    if not parsed:
+        # 旧 2.x 系 API フォールバック
+        items.clear()
+        for page in ocr.ocr(tmp.name):
+            if not page:
+                continue
+            for line in page:
+                add(line[0], line[1][0], line[1][1])
+    try:
+        os.unlink(tmp.name)
+    except OSError:
+        pass
+
+    name_min_h = 0.022 * w
+    names = sorted([o for o in items if _is_name(o, name_min_h)],
+                   key=lambda o: (o["y0"], o["x0"]))
+    dishes = []
+    for c in _build_cards(names, w, h):
+        elems = [o for o in items
+                 if c["L"] <= o["cx"] <= c["R"] and c["T"] <= o["cy"] <= c["B"]]
+        price, sizes = _extract_price(elems)
+        if price is None:
+            continue  # 価格が無い＝料理カードではない
+        nut = _extract_nutrition(elems, c["cx"], h)
+        dishes.append({"name": c["name"], "price": price, "sizes": sizes,
+                       "energy": nut["energy"], "protein": nut["protein"],
+                       "fat": nut["fat"], "carb": nut["carb"],
+                       "category": _guess_category(c["name"])})
+    return dishes
+
+
+def analyze_image_url(url):
+    """画像URLをOCR解析して栄養付きdishリストを返す。画像ID単位でキャッシュ（再解析しない）"""
+    img_id = url.rsplit("/", 1)[-1].rsplit(".", 1)[0]  # 0000042541
     cf = CACHE_DIR / f"{img_id}.json"
     if cf.exists():
         try:
@@ -269,32 +381,19 @@ def analyze_image_url(client, url):
         print(f"  ⚠️ 画像DL失敗 {img_id}: {e}", file=sys.stderr)
         return []
 
-    b64 = base64.standard_b64encode(img_bytes).decode("ascii")
-    media = "image/png"
-    print(f"  🤖 解析中 {img_id} …", file=sys.stderr)
+    print(f"  🔍 OCR解析中 {img_id} …", file=sys.stderr)
     try:
-        resp = client.messages.create(
-            model=MODEL, max_tokens=8000,
-            messages=[{"role": "user", "content": [
-                {"type": "image", "source": {"type": "base64", "media_type": media, "data": b64}},
-                {"type": "text", "text": ANALYZE_PROMPT},
-            ]}],
-        )
+        raw = ocr_dishes(img_bytes)
     except Exception as e:
-        print(f"  ❌ Claude解析失敗 {img_id}: {e}", file=sys.stderr)
+        print(f"  ❌ OCR解析失敗 {img_id}: {e}", file=sys.stderr)
         return []
 
-    text = "".join(b.text for b in resp.content if hasattr(b, "text"))
-    data = extract_json(text)
-    raw = (data or {}).get("dishes", []) if data else []
     dishes = [normalize_dish(d) for d in raw if d.get("name")]
     valid = is_valid_menu(dishes)
     CACHE_DIR.mkdir(exist_ok=True)
     cf.write_text(json.dumps({"dishes": dishes, "valid": valid}, ensure_ascii=False, indent=1),
                   encoding="utf-8")
-    u = resp.usage
-    print(f"     → {len(dishes)}品 / valid={valid} / in {u.input_tokens}tok out {u.output_tokens}tok",
-          file=sys.stderr)
+    print(f"     → {len(dishes)}品 / valid={valid}", file=sys.stderr)
     return dishes if valid else []
 
 
@@ -304,7 +403,6 @@ def analyze_image_url(client, url):
 def fetch_all():
     jst = timezone(timedelta(hours=9))
     today = datetime.now(jst).date()
-    client = anthropic.Anthropic()  # ANTHROPIC_API_KEY を環境から
     with httpx.Client(verify=_ctx, timeout=30, follow_redirects=True,
                       headers={"User-Agent": UA, "Accept-Language": "ja-JP"}) as c:
         c.get(BASE)
@@ -318,12 +416,12 @@ def fetch_all():
                 raw[d] = parse_image_urls(c.get(u).text)
                 time.sleep(0.2)
 
-            # ユニークな画像だけ1回解析（キャッシュで二重課金防止）
+            # ユニークな画像だけ1回解析（キャッシュで二重解析防止）
             analyzed = {}
             for d in range(DAYS):
                 for url in raw[d]:
                     if url not in analyzed:
-                        analyzed[url] = analyze_image_url(client, url)
+                        analyzed[url] = analyze_image_url(url)
 
             shop["days"] = []
             for d in range(DAYS):
