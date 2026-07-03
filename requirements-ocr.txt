@@ -1,0 +1,8 @@
+# OCR 版ビルダー（build_ocr.py）用の依存。Claude API 不要＝課金ゼロ
+# ローカル検証環境（~/.local/menu-ocr-venv、2026-07-02 検証）と同じピン
+httpx==0.28.1
+beautifulsoup4==4.15.0
+pillow==12.3.0
+python-dotenv==1.2.2
+paddlepaddle==3.3.1
+paddleocr==3.7.0
