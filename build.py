@@ -20,7 +20,7 @@ import re
 import ssl
 import sys
 import time
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
 import httpx
@@ -74,6 +74,41 @@ def parse_image_urls(html):
         url = url.replace("http://", "https://")
         urls.append(url)
     return urls
+
+
+def _nearest_date(mon, day, today):
+    """月/日だけの表記に、today に最も近い年を補う（年末年始の跨ぎ対策）"""
+    best = None
+    for off in (-1, 0, 1):
+        try:
+            cand = date(today.year + off, mon, day)
+        except ValueError:
+            continue
+        if best is None or abs((cand - today).days) < abs((best - today).days):
+            best = cand
+    return best
+
+
+def parse_day_nav(html, today):
+    """ページ上部ナビ <a href="...current_day=N...">M／D</a> から
+    current_day → 実日付 の対応を取る。
+
+    本家の current_day はカレンダー日ではなく営業日インデックス
+    （土日祝をスキップし、夕方には翌営業日へ繰り上がる）ため、
+    today + d 日のカレンダー計算では日付がずれる。ナビの表記が唯一の正。
+
+    生HTMLを正規表現で読む（bs4経由にしない）。href の "&current_day" を
+    BeautifulSoup 4.15 系が実体参照 &curren;(¤) として復号し current_day を
+    壊すため、属性値ではなく生の markup から index と日付を拾う。
+    """
+    seen = {}
+    for m in re.finditer(
+            r"current_day=(\d+)[^>]*>\s*(\d{1,2})\s*[／/]\s*(\d{1,2})\s*<", html):
+        idx = int(m.group(1))
+        dt = _nearest_date(int(m.group(2)), int(m.group(3)), today)
+        if dt is not None:
+            seen.setdefault(idx, dt)  # 同一 index は最初の出現を採用
+    return sorted(seen.items())
 
 
 # ============================================================
@@ -312,24 +347,34 @@ def fetch_all():
             print(f"{shop['emoji']} {shop['name']}", file=sys.stderr)
             rp = c.post(BASE, data={"shop_id": shop["id"], "client_id": "13",
                                     "shop_name": shop["name"]})
-            raw = {0: parse_image_urls(rp.text)}
-            for d in range(1, DAYS):
-                u = BASE.replace("current_day=0", f"current_day={d}")
-                raw[d] = parse_image_urls(c.get(u).text)
-                time.sleep(0.2)
+            # 日付は本家ナビの表記を正本にする。current_day は土日を飛ばす
+            # 営業日インデックスで夕方に翌日へ繰り上がるため、today+d では1日ずれる。
+            nav = parse_day_nav(rp.text, today)
+            if not nav:
+                print("  ⚠️ 日付ナビを取得できず、カレンダー計算にフォールバック",
+                      file=sys.stderr)
+                nav = [(d, today + timedelta(days=d)) for d in range(DAYS)]
+
+            raw = {}
+            for idx, _dt in nav:
+                if idx == 0:
+                    raw[idx] = parse_image_urls(rp.text)
+                else:
+                    u = BASE.replace("current_day=0", f"current_day={idx}")
+                    raw[idx] = parse_image_urls(c.get(u).text)
+                    time.sleep(0.2)
 
             # ユニークな画像だけ1回解析（キャッシュで二重課金防止）
             analyzed = {}
-            for d in range(DAYS):
-                for url in raw[d]:
+            for idx, _dt in nav:
+                for url in raw[idx]:
                     if url not in analyzed:
                         analyzed[url] = analyze_image_url(client, url)
 
             shop["days"] = []
-            for d in range(DAYS):
-                dt = today + timedelta(days=d)
+            for idx, dt in nav:
                 dishes, seen = [], set()
-                for url in raw[d]:
+                for url in raw[idx]:
                     for dish in analyzed.get(url, []):
                         k = (dish["name"], dish["price"])
                         if k not in seen:
@@ -337,7 +382,7 @@ def fetch_all():
                             dishes.append(dish)
                 shop["days"].append({
                     "date": f"{dt.month}/{dt.day}", "wday": WD[dt.weekday()],
-                    "weekend": dt.weekday() >= 5, "images": raw[d], "dishes": dishes,
+                    "weekend": dt.weekday() >= 5, "images": raw[idx], "dishes": dishes,
                 })
     return SHOPS
 

@@ -1,0 +1,218 @@
+{
+ "dishes": [
+  {
+   "name": "うまいもん",
+   "price": 341,
+   "sizes": {
+    "並": 341
+   },
+   "energy": 549,
+   "protein": 18.8,
+   "fat": 37.0,
+   "carb": 34.7,
+   "category": "その他"
+  },
+  {
+   "name": "祭り",
+   "price": 341,
+   "sizes": {
+    "並": 341
+   },
+   "energy": 549,
+   "protein": 18.8,
+   "fat": 37.0,
+   "carb": 34.7,
+   "category": "その他"
+  },
+  {
+   "name": "祭り",
+   "price": 583,
+   "sizes": {
+    "並": 583
+   },
+   "energy": 639,
+   "protein": 28.1,
+   "fat": 18.1,
+   "carb": 96.0,
+   "category": "その他"
+  },
+  {
+   "name": "チキンカツ南蛮丼",
+   "price": 528,
+   "sizes": {
+    "小": 440,
+    "大": 660,
+    "中": 528
+   },
+   "energy": 767,
+   "protein": 21.0,
+   "fat": 30.6,
+   "carb": 106.4,
+   "category": "丼"
+  },
+  {
+   "name": "祭り",
+   "price": 528,
+   "sizes": {
+    "小": 440,
+    "大": 660,
+    "中": 528
+   },
+   "energy": 482,
+   "protein": 18.0,
+   "fat": 7.6,
+   "carb": 86.2,
+   "category": "その他"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {
+    "並": 110
+   },
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "チキンカツカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 826,
+   "protein": 24.0,
+   "fat": 31.3,
+   "carb": 116.5,
+   "category": "丼"
+  },
+  {
+   "name": "ポークシチュー",
+   "price": 297,
+   "sizes": {
+    "並": 297
+   },
+   "energy": 275,
+   "protein": 12.8,
+   "fat": 10.2,
+   "carb": 34.6,
+   "category": "その他"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "大": 231,
+    "中": 187,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "ミニサラダ",
+   "price": 77,
+   "sizes": {
+    "並": 77
+   },
+   "energy": 8,
+   "protein": 0.3,
+   "fat": 0.0,
+   "carb": 1.9,
+   "category": "サラダ"
+  },
+  {
+   "name": "わかめ玉子サラダ",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 60,
+   "protein": 2.4,
+   "fat": 4.4,
+   "carb": 3.6,
+   "category": "サラダ"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {
+    "並": 44
+   },
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ねばとろオクラ",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 25,
+   "protein": 1.3,
+   "fat": 0.0,
+   "carb": 5.8,
+   "category": "その他"
+  },
+  {
+   "name": "ひじき煮",
+   "price": 77,
+   "sizes": {
+    "中": 77,
+    "大": 99
+   },
+   "energy": 48,
+   "protein": 1.6,
+   "fat": 2.4,
+   "carb": 4.9,
+   "category": "小鉢"
+  },
+  {
+   "name": "大学芋",
+   "price": 121,
+   "sizes": {
+    "並": 121
+   },
+   "energy": 157,
+   "protein": 0.6,
+   "fat": 3.2,
+   "carb": 31.7,
+   "category": "その他"
+  },
+  {
+   "name": "欧風ビーフカレーコロッケ",
+   "price": 154,
+   "sizes": {
+    "並": 154
+   },
+   "energy": 211,
+   "protein": 2.9,
+   "fat": 14.6,
+   "carb": 17.0,
+   "category": "丼"
+  },
+  {
+   "name": "牛肉コロッケ",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 226,
+   "protein": 3.0,
+   "fat": 14.6,
+   "carb": 21.1,
+   "category": "その他"
+  }
+ ],
+ "valid": true
+}
