@@ -1,0 +1,203 @@
+{
+ "dishes": [
+  {
+   "name": "チキン南蛮",
+   "price": 341,
+   "sizes": {
+    "並": 341
+   },
+   "energy": 547,
+   "protein": 18.5,
+   "fat": 36.8,
+   "carb": 35.0,
+   "category": "その他"
+  },
+  {
+   "name": "桜姫鶏チーズメンチトマトソース",
+   "price": 297,
+   "sizes": {
+    "並": 297
+   },
+   "energy": 406,
+   "protein": 11.5,
+   "fat": 30.4,
+   "carb": 23.7,
+   "category": "その他"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {
+    "並": 396
+   },
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "ハッシュドビーフ丼",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 537,
+   "protein": 12.5,
+   "fat": 12.6,
+   "carb": 97.2,
+   "category": "丼"
+  },
+  {
+   "name": "豚肉の旨辛みそ炒め",
+   "price": 297,
+   "sizes": {
+    "並": 297
+   },
+   "energy": 281,
+   "protein": 20.5,
+   "fat": 15.5,
+   "carb": 16.9,
+   "category": "主菜"
+  },
+  {
+   "name": "唐揚げカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 763,
+   "protein": 18.9,
+   "fat": 25.6,
+   "carb": 114.8,
+   "category": "丼"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {
+    "並": 44
+   },
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ポテト野菜サラダ",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 89,
+   "protein": 1.7,
+   "fat": 4.2,
+   "carb": 12.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "さっぱり豚汁",
+   "price": 110,
+   "sizes": {
+    "並": 110
+   },
+   "energy": 58,
+   "protein": 3.8,
+   "fat": 2.3,
+   "carb": 7.1,
+   "category": "汁物"
+  },
+  {
+   "name": "さば塩焼き",
+   "price": 253,
+   "sizes": {
+    "並": 253
+   },
+   "energy": 268,
+   "protein": 15.9,
+   "fat": 22.7,
+   "carb": 0.0,
+   "category": "主菜"
+  },
+  {
+   "name": "蒸し鶏オクラ梅だれ和え",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 40,
+   "protein": 4.5,
+   "fat": 0.3,
+   "carb": 5.5,
+   "category": "小鉢"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {
+    "並": 77
+   },
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "鉄分たっぷり鶏きも煮",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 73,
+   "protein": 7.8,
+   "fat": 1.9,
+   "carb": 5.5,
+   "category": "小鉢"
+  },
+  {
+   "name": "クリームコロッケ(カニ入り)",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 215,
+   "protein": 3.6,
+   "fat": 14.8,
+   "carb": 17.4,
+   "category": "その他"
+  },
+  {
+   "name": "焼きプリンタルト",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 117,
+   "protein": 1.8,
+   "fat": 6.5,
+   "carb": 12.5,
+   "category": "デザート"
+  }
+ ],
+ "valid": true
+}

@@ -1,0 +1,155 @@
+{
+ "dishes": [
+  {
+   "name": "ジューシー鶏カツオーロラソース",
+   "price": 385,
+   "sizes": {
+    "並": 385
+   },
+   "energy": 514,
+   "protein": 15.2,
+   "fat": 41.0,
+   "carb": 22.9,
+   "category": "主菜"
+  },
+  {
+   "name": "豚肉の旨辛みそ炒め",
+   "price": 297,
+   "sizes": {
+    "並": 297
+   },
+   "energy": 281,
+   "protein": 20.5,
+   "fat": 15.5,
+   "carb": 16.9,
+   "category": "主菜"
+  },
+  {
+   "name": "桜姫鶏チーズメンチトマトソース",
+   "price": 297,
+   "sizes": {
+    "並": 297
+   },
+   "energy": 406,
+   "protein": 11.5,
+   "fat": 30.4,
+   "carb": 23.7,
+   "category": "その他"
+  },
+  {
+   "name": "アジ大葉フライ梅タルソース",
+   "price": 253,
+   "sizes": {
+    "並": 253
+   },
+   "energy": 286,
+   "protein": 9.6,
+   "fat": 18.3,
+   "carb": 20.4,
+   "category": "主菜"
+  },
+  {
+   "name": "ビビンバ丼",
+   "price": 528,
+   "sizes": {
+    "小": 440,
+    "大": 660,
+    "中": 528
+   },
+   "energy": 556,
+   "protein": 16.7,
+   "fat": 11.9,
+   "carb": 97.8,
+   "category": "丼"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "冷やし豚塩おろしうどん",
+   "price": 517,
+   "sizes": {
+    "並": 517
+   },
+   "energy": 539,
+   "protein": 15.7,
+   "fat": 18.3,
+   "carb": 76.8,
+   "category": "麺"
+  },
+  {
+   "name": "うまいいもん",
+   "price": 517,
+   "sizes": {
+    "並": 517
+   },
+   "energy": 539,
+   "protein": 15.7,
+   "fat": 18.3,
+   "carb": 76.8,
+   "category": "その他"
+  },
+  {
+   "name": "祭り",
+   "price": 594,
+   "sizes": {
+    "並": 594
+   },
+   "energy": 519,
+   "protein": 27.5,
+   "fat": 10.0,
+   "carb": 78.9,
+   "category": "その他"
+  },
+  {
+   "name": "さば塩焼き",
+   "price": 253,
+   "sizes": {
+    "並": 253
+   },
+   "energy": 268,
+   "protein": 15.9,
+   "fat": 22.7,
+   "carb": 0.0,
+   "category": "主菜"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {
+    "並": 396
+   },
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  },
+  {
+   "name": "チーズカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 650,
+   "protein": 19.1,
+   "fat": 20.7,
+   "carb": 99.3,
+   "category": "丼"
+  }
+ ],
+ "valid": true
+}

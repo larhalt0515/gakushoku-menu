@@ -1,0 +1,115 @@
+{
+ "dishes": [
+  {
+   "name": "クリームコロッケ(カニ入り)",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 215,
+   "protein": 3.6,
+   "fat": 14.8,
+   "carb": 17.4,
+   "category": "その他"
+  },
+  {
+   "name": "ポテト野菜サラダ",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 89,
+   "protein": 1.7,
+   "fat": 4.2,
+   "carb": 12.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "鉄分たつぷり鶏きも煮",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 73,
+   "protein": 7.8,
+   "fat": 1.9,
+   "carb": 5.5,
+   "category": "小鉢"
+  },
+  {
+   "name": "オクラ巣ごもり玉子",
+   "price": 132,
+   "sizes": {
+    "並": 132
+   },
+   "energy": 81,
+   "protein": 6.7,
+   "fat": 5.5,
+   "carb": 3.0,
+   "category": "その他"
+  },
+  {
+   "name": "蒸し鶏オクラ梅だれ和え",
+   "price": 99,
+   "sizes": {
+    "中": 99,
+    "小": 77
+   },
+   "energy": 89,
+   "protein": 2.1,
+   "fat": 6.0,
+   "carb": 7.3,
+   "category": "小鉢"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {
+    "並": 77
+   },
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "さっぱり豚汁",
+   "price": 77,
+   "sizes": {
+    "中": 77,
+    "大": 110
+   },
+   "energy": 58,
+   "protein": 3.8,
+   "fat": 2.3,
+   "carb": 7.1,
+   "category": "汁物"
+  },
+  {
+   "name": "フルーツミックスヨーグルト",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 51,
+   "protein": 1.5,
+   "fat": 1.2,
+   "carb": 9.6,
+   "category": "その他"
+  },
+  {
+   "name": "さつま芋と栗のタルト",
+   "price": 99,
+   "sizes": {
+    "並": 99
+   },
+   "energy": 107,
+   "protein": 0.7,
+   "fat": 4.9,
+   "carb": 15.2,
+   "category": "デザート"
+  }
+ ],
+ "valid": true
+}
