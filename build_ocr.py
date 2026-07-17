@@ -190,7 +190,12 @@ def get_ocr():
     if _OCR is None:
         from paddleocr import PaddleOCR
         try:
-            _OCR = PaddleOCR(lang="japan", use_textline_orientation=True)
+            # enable_mkldnn=False: paddlepaddle 3.3.x は CPU の oneDNN(PIR) 経路に
+            # 未実装バグがあり全推論が NotImplementedError で落ちる（CI の x86 で発症）。
+            # https://github.com/PaddlePaddle/Paddle/issues/77340
+            # https://github.com/PaddlePaddle/PaddleOCR/issues/18162
+            _OCR = PaddleOCR(lang="japan", use_textline_orientation=True,
+                             enable_mkldnn=False)
         except TypeError:
             _OCR = PaddleOCR(lang="japan", use_angle_cls=True)
     return _OCR

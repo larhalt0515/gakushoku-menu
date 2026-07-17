@@ -20,7 +20,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 初回復旧runはキャッシュ全枯れ＋mkldnn無効でCPU推論が遅いので余裕を持たせる
+    # （2回目以降はキャッシュヒットで数枚/日に戻る）
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
