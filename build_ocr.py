@@ -151,15 +151,17 @@ def normalize_dish(d):
         price = int(d.get("price") or 0)
         if price not in sizes.values():
             price = sorted(sizes.items(), key=lambda kv: SIZE_ORDER.get(kv[0], 9))[0][1]
+    name = fix_dish_name(d.get("name", ""))
     return {
-        "name": fix_dish_name(d.get("name", "")),
+        "name": name,
         "price": price,
         "sizes": sizes,
         "energy": d.get("energy"),
         "protein": d.get("protein"),
         "fat": d.get("fat"),
         "carb": d.get("carb"),
-        "category": d.get("category", "その他"),
+        # categoryは整形後の料理名から毎回導出（分類ロジックの更新に追従させる）
+        "category": _guess_category(name),
     }
 
 
@@ -326,7 +328,10 @@ def _guess_category(name):
         return "汁物"
     if re.search(r"サラダ", name):
         return "サラダ"
-    if re.search(r"ケーキ|タルト|もち|餅|プリン|ゼリー|デザート", name):
+    if re.search(r"ケーキ|タルト|もち|餅|プリン|ゼリー|デザート"
+                 r"|エクレア|シュークリーム|ヨーグルト|ムース|クレープ|パフェ"
+                 r"|アイス|ドーナ|ワッフル|ショート|ティラミス|パンナコッタ"
+                 r"|ババロア|マカロン|あんみつ|ぜんざい|白玉|大福|どら焼き|大学芋", name):
         return "デザート"
     if re.search(r"ハンバーグ|フライ|焼|天ぷら|カツ|揚げ|ステーキ|炒め", name):
         return "主菜"
@@ -405,7 +410,15 @@ def analyze_image_url(url):
     if cf.exists():
         try:
             cached = json.loads(cf.read_text(encoding="utf-8"))
-            return cached["dishes"] if cached.get("valid") else []
+            if not cached.get("valid"):
+                return []
+            dishes = cached["dishes"]
+            for d in dishes:
+                # 「その他」落ちしたものだけ再判定してデザート等に救済する。
+                # Claude版(build.py)cache由来の細かい分類（主菜/小鉢/デザート等）は壊さない。
+                if d.get("category", "その他") == "その他":
+                    d["category"] = _guess_category(d.get("name", ""))
+            return dishes
         except Exception:
             pass
 
