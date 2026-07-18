@@ -403,6 +403,28 @@ def ocr_dishes(img_bytes):
     return dishes
 
 
+# OCR実行の健全性メトリクス（analyze_image_url が更新し、main末尾のゲートが判定）
+STATS = {"cache_hit": 0, "ocr_ok": 0, "ocr_crash": 0, "dl_fail": 0}
+CRASH_RATE_LIMIT = 0.5  # 新規解析のうちこの割合超がOCR例外なら「環境全滅の疑い」
+
+
+def health_verdict(stats, limit=CRASH_RATE_LIMIT):
+    """OCRメトリクスから健全性を判定して (ok: bool, reason: str) を返す。
+
+    新規に解析を試みた画像(ocr_ok + ocr_crash)のうち OCR例外の割合が limit を
+    超えたら「OCR環境全滅の疑い」でNG。全キャッシュヒットやDL失敗のみの回、
+    コールドスタート(新規解析0)は判定対象外＝正常扱いにする（誤発報を防ぐ）。
+    週末等の正当な空は OCR自体は成功(ocr_ok)しており crash に乗らないので誤発報しない。
+    """
+    fresh = stats["ocr_ok"] + stats["ocr_crash"]
+    if fresh == 0:
+        return True, f"新規OCR解析なし(cache_hit={stats['cache_hit']} dl_fail={stats['dl_fail']})＝判定スキップ"
+    rate = stats["ocr_crash"] / fresh
+    if rate > limit:
+        return False, f"OCR環境全滅の疑い: crash {stats['ocr_crash']}/{fresh}={rate:.0%} > 上限{limit:.0%}"
+    return True, f"OK: ocr_ok={stats['ocr_ok']} crash={stats['ocr_crash']}/{fresh}={rate:.0%}"
+
+
 def analyze_image_url(url):
     """画像URLをOCR解析して栄養付きdishリストを返す。画像ID単位でキャッシュ（再解析しない）"""
     img_id = url.rsplit("/", 1)[-1].rsplit(".", 1)[0]  # 0000042541
@@ -410,6 +432,7 @@ def analyze_image_url(url):
     if cf.exists():
         try:
             cached = json.loads(cf.read_text(encoding="utf-8"))
+            STATS["cache_hit"] += 1
             if not cached.get("valid"):
                 return []
             dishes = cached["dishes"]
@@ -428,9 +451,11 @@ def analyze_image_url(url):
                           headers={"User-Agent": UA}) as c:
             r = c.get(url)
             if not r.is_success:
+                STATS["dl_fail"] += 1
                 return []
             img_bytes = r.content
     except Exception as e:
+        STATS["dl_fail"] += 1
         print(f"  ⚠️ 画像DL失敗 {img_id}: {e}", file=sys.stderr)
         return []
 
@@ -438,9 +463,11 @@ def analyze_image_url(url):
     try:
         raw = ocr_dishes(img_bytes)
     except Exception as e:
+        STATS["ocr_crash"] += 1
         print(f"  ❌ OCR解析失敗 {img_id}: {e}", file=sys.stderr)
         return []
 
+    STATS["ocr_ok"] += 1
     dishes = [normalize_dish(d) for d in raw if d.get("name")]
     valid = is_valid_menu(dishes)
     CACHE_DIR.mkdir(exist_ok=True)
@@ -914,6 +941,15 @@ def main():
     tok = load_design_tokens()
     html = TEMPLATE.replace("__CSSVARS__", tokens_to_css_vars(tok))
     html = html.replace("__DATA__", json.dumps(payload, ensure_ascii=False))
+
+    # 健全性ゲート: OCRが新規画像の過半数で例外死する環境全滅(バグ1型)を検出したら
+    # index.htmlを上書きせず exit 1 する。CIが赤くなり、Pagesは直前の良版のまま残る。
+    ok, reason = health_verdict(STATS)
+    print(f"health: {reason}", file=sys.stderr)
+    if not ok:
+        print(f"❌ 健全性ゲート NG: {reason} — index.htmlを更新せず終了", file=sys.stderr)
+        sys.exit(1)
+
     out.write_text(html, encoding="utf-8")
     print(f"✅ 生成完了: {out}", file=sys.stderr)
 
