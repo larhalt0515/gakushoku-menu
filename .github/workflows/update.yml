@@ -35,6 +35,13 @@ jobs:
       - name: Install deps
         run: pip install -r requirements-ocr.txt
 
+      # 純関数テスト（paddle不要の高速ゲート）。分類器/パーサの回帰をここで即検出。
+      # 落ちれば以降のBuild/pushに到達せず、Pagesは直前の良版のまま残る。
+      - name: Unit tests (pure functions)
+        run: |
+          pip install -r requirements-dev.txt
+          python -m pytest tests/test_classify.py tests/test_parse.py -q
+
       # PaddleOCR のモデルは初回に ~/.paddlex へダウンロードされるのでキャッシュする
       - name: Cache PaddleOCR models
         uses: actions/cache@v4
@@ -43,6 +50,11 @@ jobs:
             ~/.paddlex
             ~/.paddleocr
           key: paddle-models-${{ hashFiles('requirements-ocr.txt') }}
+
+      # OCRスモークテスト: 固定画像で実推論し、料理が取れなければ即fail。
+      # paddle 3.3.x oneDNN/PIRバグ型の「CIでだけOCR全滅」を毎run・Build前に検出する。
+      - name: OCR smoke test
+        run: python -m pytest tests/test_smoke_ocr.py -q
 
       - name: Build index.html
         run: python build_ocr.py
