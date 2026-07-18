@@ -1,0 +1,48 @@
+name: watchdog
+# 「ジョブが一度も走らない」系(cron自動無効化・YAML破損・全run失敗)の最後の網。
+# update-menu本体とは別ワークフローにして、本体が丸ごと壊れても独立に鳴らす。
+# ただしこれもGitHub Actions上で動くため、GitHub側の障害はカバーできない
+# (その層はbuild_ocr.pyのheartbeat→外部死活監視サービスが担う)。
+on:
+  schedule:
+    - cron: "15 6 * * *"   # JST 15:15 頃、1日1回
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # index.htmlの最終更新コミットまで遡るため全履歴が要る
+
+      - name: Check index.html freshness
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=$(git log -1 --format=%ct -- index.html)
+          now=$(date +%s)
+          hours=$(( (now - last) / 3600 ))
+          echo "index.html は最終更新から ${hours}h 経過"
+          # 平日は1日3回更新。土日を挟んでも通常48hで1回は更新される。
+          # 長期休業(夏休み等)の誤発報を避けるため閾値は緩めの60h。
+          # ※本来は「学食営業日か」を見て精緻化すべき(Phase横断の休業ルールで対応予定)。
+          THRESHOLD=60
+          if [ "$hours" -gt "$THRESHOLD" ]; then
+            gh label create update-stalled --color fbca04 --description "menu更新停止" 2>/dev/null || true
+            open=$(gh issue list --label update-stalled --state open --json number --jq '.[].number')
+            if [ -z "$open" ]; then
+              gh issue create \
+                --title "⚠️ menu更新が停止 (${hours}h) $(TZ=Asia/Tokyo date '+%Y-%m-%d')" \
+                --label update-stalled \
+                --body "index.html が ${hours}h 更新されていません(閾値${THRESHOLD}h)。update-menu の cron停止・全run失敗・YAML破損の疑い。Actionsを確認してください。"
+            else
+              echo "既存の update-stalled Issue #$open があるためスキップ"
+            fi
+          else
+            echo "鮮度OK (閾値 ${THRESHOLD}h 以内)"
+          fi

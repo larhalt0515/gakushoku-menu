@@ -929,6 +929,21 @@ window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 """
 
 
+def _ping_heartbeat():
+    """正常完了をGitHub外の死活監視(healthchecks.io等)へ通知する。
+    HEARTBEAT_URL 未設定なら何もしない(ハルがsecret登録するまでno-op)。
+    cronの自動無効化やYAML破損など「ジョブが一度も走らない」障害はActions内の
+    ゲートでは原理的に検知できないため、外部サービスで鮮度を監視する。"""
+    url = os.environ.get("HEARTBEAT_URL")
+    if not url:
+        return
+    try:
+        httpx.get(url, timeout=10)
+        print("heartbeat ping OK", file=sys.stderr)
+    except Exception as e:
+        print(f"heartbeat ping失敗(無視): {e}", file=sys.stderr)
+
+
 def main():
     shops = fetch_all()
     jst = timezone(timedelta(hours=9))
@@ -952,6 +967,7 @@ def main():
 
     out.write_text(html, encoding="utf-8")
     print(f"✅ 生成完了: {out}", file=sys.stderr)
+    _ping_heartbeat()
 
 
 if __name__ == "__main__":

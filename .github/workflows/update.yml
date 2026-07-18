@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  issues: write   # 失敗時に自動でIssueを起票するため
 
 # 同時実行を防ぐ（cronと手動が重なっても1本に）
 concurrency:
@@ -40,7 +41,7 @@ jobs:
       - name: Unit tests (pure functions)
         run: |
           pip install -r requirements-dev.txt
-          python -m pytest tests/test_classify.py tests/test_parse.py -q
+          python -m pytest tests/ --ignore=tests/test_smoke_ocr.py -q
 
       # PaddleOCR のモデルは初回に ~/.paddlex へダウンロードされるのでキャッシュする
       - name: Cache PaddleOCR models
@@ -57,6 +58,10 @@ jobs:
         run: python -m pytest tests/test_smoke_ocr.py -q
 
       - name: Build index.html
+        env:
+          # GitHub外の死活監視(healthchecks.io等)へ正常完了をping。
+          # 未設定ならbuild_ocr.py側でno-op。cron停止など「ジョブが走らない」系を外部で検知する。
+          HEARTBEAT_URL: ${{ secrets.HEARTBEAT_URL }}
         run: python build_ocr.py
 
       - name: Commit & push if changed
@@ -70,4 +75,23 @@ jobs:
             git commit -m "🤖 学食メニュー自動更新 ($(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST'))"
             git push
             echo "✅ 更新をpushした"
+          fi
+
+      # いずれかのステップが失敗したらIssueを自動起票（通知の一次経路）。
+      # GitHubの標準失敗メールは最終コミッター依存で脆いので、Issueを正にする。
+      # open中の同ラベルIssueがあれば重複起票しない。
+      - name: Notify on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create ci-failure --color b60205 --description "update-menu CI失敗" 2>/dev/null || true
+          open=$(gh issue list --label ci-failure --state open --json number --jq '.[].number')
+          if [ -z "$open" ]; then
+            gh issue create \
+              --title "🚨 update-menu 失敗 ($(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST'))" \
+              --label ci-failure \
+              --body "update-menu が失敗しました。健全性ゲート/OCRスモーク/純関数テスト/Buildのいずれかが赤です。ログ: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          else
+            echo "既存のci-failure Issue #$open があるため起票をスキップ"
           fi
