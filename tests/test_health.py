@@ -16,7 +16,7 @@ def V(cache_hit=0, ocr_ok=0, ocr_crash=0, dl_fail=0):
 
 def test_normal_all_ok():
     ok, _ = V(ocr_ok=20)
-    assert ok is False  # TEMP: 通知網の実弾テスト(意図的失敗・直後に戻す)
+    assert ok is True
 
 
 def test_all_crash_is_ng():
