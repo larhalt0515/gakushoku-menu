@@ -425,6 +425,36 @@ def health_verdict(stats, limit=CRASH_RATE_LIMIT):
     return True, f"OK: ocr_ok={stats['ocr_ok']} crash={stats['ocr_crash']}/{fresh}={rate:.0%}"
 
 
+# cacheスキーマのパーサ版。_extract_price 等の抽出ロジックを直したら +1 する。
+# 読み込み時に pv < PARSER_VERSION の v2キャッシュは再解析され、抽出の改善が反映される。
+PARSER_VERSION = 1
+
+
+def dishes_from_cache(cached):
+    """cache dict から表示用 dishes を導出する。再解析が必要なら None、
+    無効メニュー(告知ポスター等)なら [] を返す。
+
+    v2(schema=2)は生OCR出力(raw)だけを保存しており、category/名前整形/valid判定を
+    読み込み時に毎回再導出する。これにより分類・正規化ロジックの改善が既存cacheにも
+    自動で反映され、「導出値をcacheに焼いて固着させる」バグ2型が構造的に消える。
+    旧スキーマ(dishes焼き込み)は後方互換で読み、「その他」だけ再判定して既存の
+    細かい分類(Claude版cache由来)は保護する。
+    """
+    if cached.get("schema") == 2:
+        if cached.get("pv", 0) < PARSER_VERSION:
+            return None  # パーサ更新済み → 再解析させる
+        dishes = [normalize_dish(d) for d in cached.get("raw", [])]
+        return dishes if is_valid_menu(dishes) else []
+    # 旧スキーマ(dishes焼き込み)の後方互換
+    if not cached.get("valid"):
+        return []
+    dishes = cached.get("dishes", [])
+    for d in dishes:
+        if d.get("category", "その他") == "その他":
+            d["category"] = _guess_category(d.get("name", ""))
+    return dishes
+
+
 def analyze_image_url(url):
     """画像URLをOCR解析して栄養付きdishリストを返す。画像ID単位でキャッシュ（再解析しない）"""
     img_id = url.rsplit("/", 1)[-1].rsplit(".", 1)[0]  # 0000042541
@@ -432,16 +462,10 @@ def analyze_image_url(url):
     if cf.exists():
         try:
             cached = json.loads(cf.read_text(encoding="utf-8"))
-            STATS["cache_hit"] += 1
-            if not cached.get("valid"):
-                return []
-            dishes = cached["dishes"]
-            for d in dishes:
-                # 「その他」落ちしたものだけ再判定してデザート等に救済する。
-                # Claude版(build.py)cache由来の細かい分類（主菜/小鉢/デザート等）は壊さない。
-                if d.get("category", "その他") == "その他":
-                    d["category"] = _guess_category(d.get("name", ""))
-            return dishes
+            result = dishes_from_cache(cached)
+            if result is not None:
+                STATS["cache_hit"] += 1
+                return result
         except Exception:
             pass
 
@@ -468,11 +492,14 @@ def analyze_image_url(url):
         return []
 
     STATS["ocr_ok"] += 1
-    dishes = [normalize_dish(d) for d in raw if d.get("name")]
+    raw_named = [d for d in raw if d.get("name")]
+    dishes = [normalize_dish(d) for d in raw_named]
     valid = is_valid_menu(dishes)
     CACHE_DIR.mkdir(exist_ok=True)
-    cf.write_text(json.dumps({"dishes": dishes, "valid": valid}, ensure_ascii=False, indent=1),
-                  encoding="utf-8")
+    # v2: 生OCR出力(raw)だけ保存。category/名前整形/valid判定は読み込み時に毎回導出する
+    # ため、抽出以外のロジック改善が既存cacheにも自動反映される（cache固着の解消）。
+    cf.write_text(json.dumps({"schema": 2, "pv": PARSER_VERSION, "raw": raw_named},
+                             ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"     → {len(dishes)}品 / valid={valid}", file=sys.stderr)
     return dishes if valid else []
 
