@@ -39,7 +39,7 @@ jobs:
               gh issue create \
                 --title "⚠️ menu更新が停止 (${hours}h) $(TZ=Asia/Tokyo date '+%Y-%m-%d')" \
                 --label update-stalled \
-                --body "index.html が ${hours}h 更新されていません(閾値${THRESHOLD}h)。update-menu の cron停止・全run失敗・YAML破損の疑い。Actionsを確認してください。"
+                --body "index.html が ${hours}h 更新されていません(閾値${THRESHOLD}h)。update-menu の cron停止・全run失敗・YAML破損の疑い。**ただし夏休み等の長期休業中はこれが正常**です(学食が閉まると画像が更新されない)。Actionsとカレンダーを確認し、休業中ならこのIssueはcloseしてOK。詳細は HANDOFF.md 参照。"
             else
               echo "既存の update-stalled Issue #$open があるためスキップ"
             fi
