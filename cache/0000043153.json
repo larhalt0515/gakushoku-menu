@@ -1,0 +1,108 @@
+{
+ "schema": 2,
+ "pv": 1,
+ "raw": [
+  {
+   "name": "鶏肉のガリバタ醤油炒め",
+   "price": 297,
+   "sizes": {},
+   "energy": 224,
+   "protein": 13.7,
+   "fat": 11.7,
+   "carb": 16.6,
+   "category": "主菜"
+  },
+  {
+   "name": "チキンカツカレーソース",
+   "price": 297,
+   "sizes": {},
+   "energy": 351,
+   "protein": 15.3,
+   "fat": 23.5,
+   "carb": 18.5,
+   "category": "丼"
+  },
+  {
+   "name": "ハンバーグおろしソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 234,
+   "protein": 15.1,
+   "fat": 10.9,
+   "carb": 17.7,
+   "category": "主菜"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "ハッシュドビーフ丼",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "小": 440,
+    "大": 660
+   },
+   "energy": 537,
+   "protein": 12.5,
+   "fat": 12.6,
+   "carb": 97.2,
+   "category": "丼"
+  },
+  {
+   "name": "明太釜玉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 446,
+   "protein": 12.3,
+   "fat": 7.8,
+   "carb": 81.9,
+   "category": "麺"
+  },
+  {
+   "name": "鶏白湯ラーメン",
+   "price": 550,
+   "sizes": {},
+   "energy": 521,
+   "protein": 29.0,
+   "fat": 11.7,
+   "carb": 75.0,
+   "category": "麺"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {},
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  }
+ ]
+}
