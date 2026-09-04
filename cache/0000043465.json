@@ -1,0 +1,185 @@
+{
+ "schema": 2,
+ "pv": 1,
+ "raw": [
+  {
+   "name": "ローストチキン塩だれ",
+   "price": 341,
+   "sizes": {},
+   "energy": 243,
+   "protein": 17.1,
+   "fat": 17.2,
+   "carb": 5.0,
+   "category": "その他"
+  },
+  {
+   "name": "豚塩カルビ丼",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "小": 440,
+    "大": 660
+   },
+   "energy": 615,
+   "protein": 14.8,
+   "fat": 23.2,
+   "carb": 88.1,
+   "category": "丼"
+  },
+  {
+   "name": "ソース海老カツ丼",
+   "price": 528,
+   "sizes": {
+    "小": 440,
+    "大": 660,
+    "中": 528
+   },
+   "energy": 674,
+   "protein": 16.1,
+   "fat": 17.5,
+   "carb": 117.0,
+   "category": "丼"
+  },
+  {
+   "name": "醤油ラーメン",
+   "price": 473,
+   "sizes": {},
+   "energy": 487,
+   "protein": 17.2,
+   "fat": 13.9,
+   "carb": 72.4,
+   "category": "麺"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "豚塩カルビカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 686,
+   "protein": 15.0,
+   "fat": 24.8,
+   "carb": 101.6,
+   "category": "丼"
+  },
+  {
+   "name": "アジ大葉フライ梅タルソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 286,
+   "protein": 9.6,
+   "fat": 18.3,
+   "carb": 20.4,
+   "category": "主菜"
+  },
+  {
+   "name": "蒸し鶏ともやしの葱生姜だれ",
+   "price": 99,
+   "sizes": {},
+   "energy": 66,
+   "protein": 6.7,
+   "fat": 3.5,
+   "carb": 3.1,
+   "category": "その他"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "中": 187,
+    "大": 231,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "ミニサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 8,
+   "protein": 0.3,
+   "fat": 0.0,
+   "carb": 1.9,
+   "category": "サラダ"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {},
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "マカロニコーンサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 113,
+   "protein": 2.3,
+   "fat": 6.6,
+   "carb": 12.7,
+   "category": "サラダ"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {
+    "中": 77,
+    "大": 99
+   },
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "りんごのタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 103,
+   "protein": 0.7,
+   "fat": 4.1,
+   "carb": 16.5,
+   "category": "デザート"
+  },
+  {
+   "name": "ハッシュポテト",
+   "price": 132,
+   "sizes": {},
+   "energy": 130,
+   "protein": 1.4,
+   "fat": 6.9,
+   "carb": 14.7,
+   "category": "その他"
+  },
+  {
+   "name": "牛肉コロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 226,
+   "protein": 3.0,
+   "fat": 14.6,
+   "carb": 21.1,
+   "category": "その他"
+  }
+ ]
+}
