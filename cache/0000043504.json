@@ -1,0 +1,185 @@
+{
+ "schema": 2,
+ "pv": 1,
+ "raw": [
+  {
+   "name": "鶏肉のガリバタ醤油炒め",
+   "price": 297,
+   "sizes": {},
+   "energy": 224,
+   "protein": 13.7,
+   "fat": 11.7,
+   "carb": 16.6,
+   "category": "主菜"
+  },
+  {
+   "name": "塩だれカツ丼",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "小": 440,
+    "大": 660
+   },
+   "energy": 691,
+   "protein": 17.4,
+   "fat": 24.8,
+   "carb": 102.2,
+   "category": "丼"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "明太釜玉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 446,
+   "protein": 12.3,
+   "fat": 7.8,
+   "carb": 81.9,
+   "category": "麺"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "白身フライタルタルソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 435,
+   "protein": 11.4,
+   "fat": 30.8,
+   "carb": 28.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  },
+  {
+   "name": "千切り煮",
+   "price": 77,
+   "sizes": {},
+   "energy": 22,
+   "protein": 1.0,
+   "fat": 0.6,
+   "carb": 3.2,
+   "category": "小鉢"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "中": 187,
+    "大": 231,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "ミニサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 8,
+   "protein": 0.3,
+   "fat": 0.0,
+   "carb": 1.9,
+   "category": "サラダ"
+  },
+  {
+   "name": "ポテト野菜サラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 89,
+   "protein": 1.7,
+   "fat": 4.2,
+   "carb": 12.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "おからの彩りサラダ",
+   "price": 77,
+   "sizes": {
+    "中": 77,
+    "大": 99
+   },
+   "energy": 94,
+   "protein": 4.0,
+   "fat": 5.4,
+   "carb": 7.4,
+   "category": "サラダ"
+  },
+  {
+   "name": "オクラおひたし",
+   "price": 77,
+   "sizes": {},
+   "energy": 17,
+   "protein": 1.2,
+   "fat": 0.1,
+   "carb": 4.1,
+   "category": "小鉢"
+  },
+  {
+   "name": "バナナクレーブ",
+   "price": 99,
+   "sizes": {},
+   "energy": 83,
+   "protein": 0.8,
+   "fat": 5.1,
+   "carb": 8.5,
+   "category": "その他"
+  },
+  {
+   "name": "すき焼きコロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 202,
+   "protein": 3.2,
+   "fat": 13.4,
+   "carb": 17.7,
+   "category": "主菜"
+  },
+  {
+   "name": "ちくわの磯辺揚げ",
+   "price": 132,
+   "sizes": {},
+   "energy": 98,
+   "protein": 8.1,
+   "fat": 3.3,
+   "carb": 8.9,
+   "category": "主菜"
+  }
+ ]
+}
