@@ -247,11 +247,12 @@
       body = candidates.map((item, index) => {
         const names = item.combo.map((dish) => `${dish.name}(${dish.category})`).join(" + ");
         const badges = [];
+        const showPfc = pfcTarget && mode === "pfc";
         if (item.balanced) badges.push("⭐主菜あり");
         if (item.hasCarb) badges.push("🍚炭水化物あり");
-        if (pfcTarget && item.pfcComplete) badges.push(`📐PFCフィット ${item.pfcFit.toFixed(0)}%`);
-        if (pfcTarget && !item.pfcComplete) badges.push("📐PFC判定不可");
-        const nutrition = pfcTarget && !item.pfcComplete
+        if (showPfc && item.pfcComplete) badges.push(`📐PFCフィット ${item.pfcFit.toFixed(0)}%`);
+        if (showPfc && !item.pfcComplete) badges.push("📐PFC判定不可");
+        const nutrition = showPfc && !item.pfcComplete
           ? "栄養値不足（PFC比較対象外）"
           : `${item.energy == null ? "-" : item.energy}kcal / P${item.protein == null ? "-" : item.protein.toFixed(1)} F${item.fat == null ? "-" : item.fat.toFixed(1)} C${item.carb == null ? "-" : item.carb.toFixed(1)}`;
         return `<div class="combo-card"><div class="combo-rank">#${index + 1}</div>`
@@ -366,6 +367,16 @@
 
   function format(value) {
     return Number(value).toFixed(1);
+  }
+  function renderReference() {
+    const weights = [40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
+    referenceBody.innerHTML = weights.map((weight) => {
+      const target = calculateTarget(170, weight);
+      return `<tr><td><strong>${weight}kg</strong></td><td>${target.mealKcal}</td>`
+        + `<td class="pfc-p">${format(target.protein)}g</td>`
+        + `<td class="pfc-f">${format(target.fat)}g</td>`
+        + `<td class="pfc-c">${format(target.carb)}g</td></tr>`;
+    }).join("");
   }
   function renderTarget() {
     summary.dataset.ready = pfcTarget ? "true" : "false";
