@@ -781,7 +781,7 @@ function show(key) {
 show(location.hash.slice(1));
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 </script>
-<script src="pfc.js"></script>
+<script src="pfc.js?v=8bdca50"></script>
 </body>
 </html>
 """
