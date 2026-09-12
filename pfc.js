@@ -9,6 +9,7 @@
   const DAILY_KCAL_PER_KG = 30;
   const MEAL_ENERGY_RATIO = 0.35;
   const PFC_RATIOS = { protein: 0.15, fat: 0.25, carb: 0.60 };
+  const PFC_MIN_RATIO = 0.80;
   const PFC_FIELDS = ["energy", "protein", "fat", "carb"];
   const SIZE_ORDER = { "小": 0, "並": 1, "中": 2, "大": 3 };
   const SIZE_RICE_DELTA = { "小": [-100, -24], "並": [0, 0], "中": [0, 0], "大": [150, 36] };
@@ -63,8 +64,11 @@
 
   function pfcMetrics(item, target) {
     const complete = hasCompleteNutrition(item);
-    if (!target || !complete) {
-      return { pfcComplete: complete, pfcError: null, pfcFit: null };
+    if (!target) {
+      return { pfcComplete: complete, pfcError: null, pfcFit: null, pfcAdequate: null };
+    }
+    if (!complete) {
+      return { pfcComplete: false, pfcError: null, pfcFit: null, pfcAdequate: false };
     }
     const expected = [target.protein, target.fat, target.carb];
     const actual = [item.protein, item.fat, item.carb];
@@ -74,10 +78,16 @@
     ) / expected.length;
     const energyError = Math.abs(item.energy - target.mealKcal) / Math.max(target.mealKcal, 1);
     const error = macroError * 0.75 + energyError * 0.25;
+    const required = [target.mealKcal, ...expected];
+    const values = [item.energy, ...actual];
+    const pfcAdequate = required.every(
+      (value, index) => value > 0 && values[index] >= value * PFC_MIN_RATIO,
+    );
     return {
       pfcComplete: true,
       pfcError: error,
       pfcFit: Math.max(0, (1 - Math.min(error, 1)) * 100),
+      pfcAdequate,
     };
   }
 
@@ -158,14 +168,21 @@
 
     all.sort((a, b) => {
       if (mode === "pfc" && rankTarget) {
+        if (a.pfcAdequate !== b.pfcAdequate) return Number(b.pfcAdequate) - Number(a.pfcAdequate);
         if (a.pfcComplete !== b.pfcComplete) return Number(b.pfcComplete) - Number(a.pfcComplete);
+        if (a.balanced !== b.balanced) return Number(b.balanced) - Number(a.balanced);
         if (a.pfcComplete && b.pfcComplete && a.pfcError !== b.pfcError) {
           return a.pfcError - b.pfcError;
         }
       }
       return score(b) - score(a) || a.diff - b.diff || (Number(b.balanced) - Number(a.balanced));
     });
-    return all.slice(0, topN);
+    let ranked = all;
+    if (mode === "pfc" && rankTarget) {
+      const balanced = all.filter((item) => item.balanced);
+      if (balanced.length) ranked = balanced;
+    }
+    return ranked.slice(0, topN);
   }
 
   function combinationsPfc(items, size) {
@@ -235,7 +252,9 @@
 
     if (pfcTarget && mode === "pfc") {
       candidates.sort((a, b) => {
+        if (a.pfcAdequate !== b.pfcAdequate) return Number(b.pfcAdequate) - Number(a.pfcAdequate);
         if (a.pfcComplete !== b.pfcComplete) return Number(b.pfcComplete) - Number(a.pfcComplete);
+        if (a.balanced !== b.balanced) return Number(b.balanced) - Number(a.balanced);
         return (a.pfcError ?? Infinity) - (b.pfcError ?? Infinity) || a.diff - b.diff;
       });
     }
@@ -250,7 +269,10 @@
         const showPfc = pfcTarget && mode === "pfc";
         if (item.balanced) badges.push("⭐主菜あり");
         if (item.hasCarb) badges.push("🍚炭水化物あり");
-        if (showPfc && item.pfcComplete) badges.push(`📐PFCフィット ${item.pfcFit.toFixed(0)}%`);
+        if (showPfc && item.pfcComplete) {
+          badges.push(`📐PFCフィット ${item.pfcFit.toFixed(0)}%`);
+          if (!item.pfcAdequate) badges.push("⚠️目安未達");
+        }
         if (showPfc && !item.pfcComplete) badges.push("📐PFC判定不可");
         const nutrition = showPfc && !item.pfcComplete
           ? "栄養値不足（PFC比較対象外）"
@@ -354,6 +376,7 @@
       </div>
     </details>
     <p class="pfc-footnote">年齢・性別・活動量を含まない注文比較用の簡易目安です。医療・減量用の指示ではありません。</p>
+    <p class="pfc-footnote">PFCフィットは充足率ではなく目安への近さです。カロリー・P・F・Cのどれかが80%未満なら「目安未達」と表示します。</p>
     <p class="pfc-footnote">料理の栄養値が不足している場合は、PFCを0として扱わず比較対象外にします。</p>
   `;
   budgetBar.insertAdjacentElement("afterend", guide);
