@@ -357,7 +357,7 @@
       <div>
         <div class="pfc-kicker">PFC GUIDE</div>
         <h2 id="pfc-guide-title">身長・体重から1食の目安</h2>
-        <p class="pfc-copy">入力した体重をもとに、学食で使える1食分のカロリーとPFCを簡易計算します。入力値はこのブラウザ内だけで使い、保存・送信しません。</p>
+        <p class="pfc-copy">入力した体重をもとに、学食で使える1食分のカロリーとPFCを簡易計算します。BMIが18.5以上のときだけ目安として採用し、入力値は保存・送信しません。</p>
       </div>
       <form class="pfc-form" id="pfc-form">
         <label class="pfc-field" for="pfc-height">身長（cm）<input id="pfc-height" type="number" min="100" max="230" step="0.1" placeholder="170"></label>
@@ -377,7 +377,7 @@
         </table>
       </div>
     </details>
-    <p class="pfc-footnote">年齢・性別・活動量を含まない注文比較用の簡易目安です。医療・減量用の指示ではありません。</p>
+    <p class="pfc-footnote">早見表を含む値は、年齢・性別・活動量を含まない注文比較用の簡易目安です。医療・減量用の指示ではありません。</p>
     <p class="pfc-footnote">PFCフィットは充足率ではなく目安への近さです。カロリー・P・F・Cのどれかが80%未満なら「目安未達」と表示します。</p>
     <p class="pfc-footnote">料理の栄養値が不足している場合は、PFCを0として扱わず比較対象外にします。</p>
   `;
@@ -400,6 +400,10 @@
     if (blocked && modeSelect?.value === "pfc") modeSelect.value = "";
   }
   function renderReference() {
+    if (pfcLowBmiBlocked) {
+      referenceBody.innerHTML = `<tr><td colspan="5">BMI 18.5未満の入力では、体重連動の早見表を表示しません。</td></tr>`;
+      return;
+    }
     const weights = [40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
     referenceBody.innerHTML = weights.map((weight) => {
       const target = calculateTarget(170, weight);
@@ -463,6 +467,7 @@
     }
     renderTarget();
     window.renderAll();
+    renderReference();
   }
 
   form.addEventListener("submit", (event) => {
