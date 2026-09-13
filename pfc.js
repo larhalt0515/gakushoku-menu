@@ -10,6 +10,7 @@
   const MEAL_ENERGY_RATIO = 0.35;
   const PFC_RATIOS = { protein: 0.15, fat: 0.25, carb: 0.60 };
   const PFC_MIN_RATIO = 0.80;
+  const LOW_BMI_WARNING = 18.5;
   const PFC_FIELDS = ["energy", "protein", "fat", "carb"];
   const SIZE_ORDER = { "小": 0, "並": 1, "中": 2, "大": 3 };
   const SIZE_RICE_DELTA = { "小": [-100, -24], "並": [0, 0], "中": [0, 0], "大": [150, 36] };
@@ -20,6 +21,7 @@
   const SOUP_TONJIRU = /(?:(?:豚|ぶた|ブタ)(?:汁|しる|シル|じる|ジル)|(?:とん|トン)(?:汁|しる|シル|じる|ジル))/;
   let pfcTarget = null;
   let pfcInputError = "";
+  let pfcLowBmiBlocked = false;
 
   function roundHalfToEven(value) {
     const lower = Math.floor(value);
@@ -391,6 +393,12 @@
   function format(value) {
     return Number(value).toFixed(1);
   }
+
+  function updatePfcModeLock(blocked) {
+    const pfcOption = modeSelect?.querySelector('option[value="pfc"]');
+    if (pfcOption) pfcOption.disabled = blocked;
+    if (blocked && modeSelect?.value === "pfc") modeSelect.value = "";
+  }
   function renderReference() {
     const weights = [40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90];
     referenceBody.innerHTML = weights.map((weight) => {
@@ -432,6 +440,8 @@
     const weight = Number(weightInput.value);
     pfcInputError = "";
     pfcTarget = null;
+    pfcLowBmiBlocked = false;
+    updatePfcModeLock(false);
     if (!heightInput.value && !weightInput.value) {
       if (modeSelect && modeSelect.value === "pfc") modeSelect.value = "";
     } else if (!heightInput.value || !weightInput.value) {
@@ -441,8 +451,15 @@
     } else if (weight < 25 || weight > 250) {
       pfcInputError = "体重は25〜250kgの範囲で入力してね";
     } else {
-      pfcTarget = calculateTarget(height, weight);
-      if (modeSelect && !modeSelect.value) modeSelect.value = "pfc";
+      const bmi = weight / ((height / 100) ** 2);
+      if (bmi < LOW_BMI_WARNING) {
+        pfcLowBmiBlocked = true;
+        pfcInputError = `BMI ${bmi.toFixed(1)}（18.5未満）。身長・体重だけの低カロリー目安は表示しません。必要量は医師または管理栄養士に相談してね。`;
+        updatePfcModeLock(true);
+      } else {
+        pfcTarget = calculateTarget(height, weight);
+        if (modeSelect && !modeSelect.value) modeSelect.value = "pfc";
+      }
     }
     renderTarget();
     window.renderAll();
@@ -452,7 +469,13 @@
     event.preventDefault();
     applyProfile();
   });
-  if (modeSelect) modeSelect.addEventListener("change", renderTarget);
+  if (modeSelect) modeSelect.addEventListener("change", () => {
+    if (pfcLowBmiBlocked && modeSelect.value === "pfc") {
+      modeSelect.value = "";
+      window.renderAll();
+    }
+    renderTarget();
+  });
   renderReference();
   renderTarget();
   window.renderAll();
