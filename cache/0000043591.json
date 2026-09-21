@@ -1,0 +1,175 @@
+{
+ "schema": 2,
+ "pv": 1,
+ "raw": [
+  {
+   "name": "ジューシー鶏カツ山賊だれ",
+   "price": 341,
+   "sizes": {},
+   "energy": 410,
+   "protein": 14.7,
+   "fat": 28.8,
+   "carb": 23.4,
+   "category": "主菜"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "ビビンバ丼",
+   "price": 528,
+   "sizes": {
+    "小": 440,
+    "大": 660,
+    "中": 528
+   },
+   "energy": 556,
+   "protein": 16.7,
+   "fat": 11.9,
+   "carb": 97.8,
+   "category": "丼"
+  },
+  {
+   "name": "肉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 525,
+   "protein": 15.3,
+   "fat": 15.7,
+   "carb": 78.6,
+   "category": "麺"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ハンバーグガーリックオニオン",
+   "price": 253,
+   "sizes": {},
+   "energy": 230,
+   "protein": 15.1,
+   "fat": 11.4,
+   "carb": 15.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "大": 660,
+    "小": 440
+   },
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  },
+  {
+   "name": "ミニサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 8,
+   "protein": 0.3,
+   "fat": 0.0,
+   "carb": 1.9,
+   "category": "サラダ"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "大": 231,
+    "中": 187,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "パンプキンサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 107,
+   "protein": 1.3,
+   "fat": 6.9,
+   "carb": 9.9,
+   "category": "サラダ"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {},
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "鉄分たっぷり鶏きも煮",
+   "price": 99,
+   "sizes": {
+    "中": 99,
+    "小": 77
+   },
+   "energy": 73,
+   "protein": 7.8,
+   "fat": 1.9,
+   "carb": 5.5,
+   "category": "小鉢"
+  },
+  {
+   "name": "大学芋",
+   "price": 121,
+   "sizes": {},
+   "energy": 157,
+   "protein": 0.6,
+   "fat": 3.2,
+   "carb": 31.7,
+   "category": "デザート"
+  },
+  {
+   "name": "クリームコロッケ(カニ入り)",
+   "price": 132,
+   "sizes": {},
+   "energy": 215,
+   "protein": 3.6,
+   "fat": 14.8,
+   "carb": 17.4,
+   "category": "その他"
+  },
+  {
+   "name": "牛肉コロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 226,
+   "protein": 3.0,
+   "fat": 14.6,
+   "carb": 21.1,
+   "category": "その他"
+  }
+ ]
+}
