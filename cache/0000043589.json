@@ -1,0 +1,119 @@
+{
+ "schema": 2,
+ "pv": 2,
+ "raw": [
+  {
+   "name": "チキン南蛮",
+   "price": 341,
+   "sizes": {},
+   "energy": 460,
+   "protein": 19.3,
+   "fat": 31.7,
+   "carb": 24.3,
+   "category": "その他"
+  },
+  {
+   "name": "豚肉の生姜焼き",
+   "price": 297,
+   "sizes": {},
+   "energy": 240,
+   "protein": 19.6,
+   "fat": 14.7,
+   "carb": 9.2,
+   "category": "主菜"
+  },
+  {
+   "name": "チキンカツチリソース",
+   "price": 297,
+   "sizes": {},
+   "energy": 406,
+   "protein": 14.9,
+   "fat": 25.0,
+   "carb": 31.9,
+   "category": "主菜"
+  },
+  {
+   "name": "ハンバーグガーリックオニオン",
+   "price": 253,
+   "sizes": {},
+   "energy": 230,
+   "protein": 15.1,
+   "fat": 11.4,
+   "carb": 15.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ビビンバ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 556,
+   "protein": 16.7,
+   "fat": 11.9,
+   "carb": 97.8,
+   "category": "丼"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "肉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 525,
+   "protein": 15.3,
+   "fat": 15.7,
+   "carb": 78.6,
+   "category": "麺"
+  },
+  {
+   "name": "とんこつ醤油ラーメン",
+   "price": 550,
+   "sizes": {},
+   "energy": 521,
+   "protein": 22.5,
+   "fat": 15.0,
+   "carb": 73.8,
+   "category": "麺"
+  },
+  {
+   "name": "さば塩焼き",
+   "price": 253,
+   "sizes": {},
+   "energy": 268,
+   "protein": 15.9,
+   "fat": 22.7,
+   "carb": 0.0,
+   "category": "主菜"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {},
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  }
+ ]
+}
