@@ -209,7 +209,11 @@ def _is_name(o, name_min_h):
     h = o["y1"] - o["y0"]
     if len(t) < 2 or h < name_min_h:
         return False
-    if "¥" in t or "￥" in t or re.search(r"\d", t):
+    if "¥" in t or "￥" in t:
+        return False
+    # 商品名に含まれる末尾の数字（例: 野菜生活100）は許容する。
+    # 数字だけの価格・栄養セルや、サイズ価格の誤検出は料理名にしない。
+    if re.search(r"\d", t) and not re.search(r"[ぁ-んァ-ヶ一-龥]{3,}\d+$", t):
         return False
     if not JP.search(t):
         return False
@@ -280,41 +284,39 @@ def _extract_nutrition(elems, name_cx, h):
     return out
 
 
-def _extract_price(elems):
-    """¥付き数値から price と sizes を組む"""
+def _extract_price(elems, anchor_cx=None):
+    """¥付き価格を読み、サイズ展開は明示ラベルが複数ある場合だけ採用する"""
     yen = [e for e in elems
            if ("¥" in e["text"] or "￥" in e["text"]) and re.search(r"\d", e["text"])
            and not any(w in e["text"] for w in ("本体", "税", "(", "（"))]
     if not yen:
         return None, {}
-    sizes = {}
-    unlabeled = []
+
+    labeled = {}
+    valid = []
     for e in yen:
         v = _numi(e["text"])
         if not v or v > 5000:
             continue
+        valid.append((v, e))
         m = re.search(r"[小中大]", e["text"])
         if m:
-            sizes[m.group()] = v
-        else:
-            unlabeled.append((v, e))
-    main = max(yen, key=lambda e: e["y1"] - e["y0"])
-    main_v = _numi(main["text"])
-    if main_v and "中" not in sizes and (sizes or len(unlabeled) > 1):
-        sizes["中"] = main_v  # メイン(最大文字)は中サイズ扱い(「甲」等の誤読対策)
-    mid = sizes.get("中")
-    if mid:
-        # ラベル無し価格をサイズ推定: 中より大きい→大 / 小さい→小 (各最大値を採用)
-        ups = [v for v, _ in unlabeled if v > mid]
-        downs = [v for v, _ in unlabeled if v < mid]
-        if ups and "大" not in sizes:
-            sizes["大"] = max(ups)
-        if downs and "小" not in sizes:
-            sizes["小"] = max(downs)
-    price = sizes.get("中") or main_v
-    if len(sizes) <= 1:
-        sizes = {}
-    return price, sizes
+            labeled[m.group()] = v
+    if not valid:
+        return None, {}
+
+    def main_key(item):
+        _, e = item
+        height = e["y1"] - e["y0"]
+        proximity = -abs(e["cx"] - anchor_cx) if anchor_cx is not None else 0
+        return height, proximity
+
+    main_v, _ = max(valid, key=main_key)
+    # サイズラベルのない価格を大小関係だけで小/中/大へ推定しない。
+    # 隣カードの価格が混入しても単一価格として扱い、誤った77/99表示を防ぐ。
+    if len(labeled) < 2 or "中" not in labeled:
+        return main_v, {}
+    return labeled["中"], labeled
 
 
 def _guess_category(name):
@@ -392,7 +394,7 @@ def ocr_dishes(img_bytes):
     for c in _build_cards(names, w, h):
         elems = [o for o in items
                  if c["L"] <= o["cx"] <= c["R"] and c["T"] <= o["cy"] <= c["B"]]
-        price, sizes = _extract_price(elems)
+        price, sizes = _extract_price(elems, c["cx"])
         if price is None:
             continue  # 価格が無い＝料理カードではない
         nut = _extract_nutrition(elems, c["cx"], h)
@@ -427,7 +429,7 @@ def health_verdict(stats, limit=CRASH_RATE_LIMIT):
 
 # cacheスキーマのパーサ版。_extract_price 等の抽出ロジックを直したら +1 する。
 # 読み込み時に pv < PARSER_VERSION の v2キャッシュは再解析され、抽出の改善が反映される。
-PARSER_VERSION = 1
+PARSER_VERSION = 2
 
 
 def dishes_from_cache(cached):

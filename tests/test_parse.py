@@ -71,3 +71,49 @@ def test_parse_image_urls_completion():
 def test_parse_image_urls_http_to_https():
     html = '<li class="item"><img src="http://signage.univcoop-tokai.net/c/x.png"></li>'
     assert B.parse_image_urls(html) == ["https://signage.univcoop-tokai.net/c/x.png"]
+
+
+def _yen(text, height, cx):
+    return {"text": text, "y0": 0, "y1": height, "cx": cx}
+
+
+def test_extract_price_does_not_infer_sizes_from_nearby_prices():
+    price, sizes = B._extract_price([
+        _yen("¥77", height=20, cx=0),
+        _yen("¥99", height=20, cx=100),
+    ], anchor_cx=100)
+    assert price == 99
+    assert sizes == {}
+
+
+def test_extract_price_requires_multiple_explicit_size_labels():
+    price, sizes = B._extract_price([
+        _yen("小¥77", height=12, cx=0),
+        _yen("¥99", height=20, cx=100),
+    ], anchor_cx=100)
+    assert price == 99
+    assert sizes == {}
+
+
+def test_extract_price_preserves_explicit_size_prices():
+    price, sizes = B._extract_price([
+        _yen("小¥440", height=12, cx=0),
+        _yen("中¥528", height=20, cx=100),
+        _yen("大¥660", height=12, cx=200),
+    ], anchor_cx=100)
+    assert price == 528
+    assert sizes == {"小": 440, "中": 528, "大": 660}
+
+
+def test_is_name_accepts_numeric_product_name_for_card_bounds():
+    assert B._is_name({"text": "野菜生活100", "y0": 0, "y1": 100}, 50)
+    assert not B._is_name({"text": "中528", "y0": 0, "y1": 100}, 50)
+
+
+def test_extract_price_requires_center_size_label():
+    price, sizes = B._extract_price([
+        _yen("小¥77", height=12, cx=0),
+        _yen("大¥99", height=12, cx=100),
+    ], anchor_cx=100)
+    assert price == 99
+    assert sizes == {}
