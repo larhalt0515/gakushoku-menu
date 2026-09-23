@@ -16,6 +16,7 @@ import build_ocr as B
     "チョコクレープ",
     "大学芋",
     "キャラメルナッツショート",
+    "モンブラン",
 ])
 def test_dessert_rescued(name):
     assert B._guess_category(name) == "デザート"
