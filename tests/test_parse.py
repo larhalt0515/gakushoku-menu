@@ -1,9 +1,10 @@
-"""HTMLパーサの回帰テスト（paddle不要・高速）。
+"""HTML・OCR価格パーサの回帰テスト（paddle不要・高速）。
 
 日付ナビと画像URLの抽出を固定する。特に parse_day_nav は
 BeautifulSoup 4.15 系が href 内の "&current_day" を実体参照として
 復号し壊す罠(ローカル4.14で動きCI4.15で壊れる)を、生HTML正規表現で
 回避している。その回避が効いていることをスナップショットで固定する。
+価格抽出はOCRでサイズラベルが欠落するケースと、別行価格の混入を固定する。
 """
 from datetime import date
 
@@ -98,9 +99,9 @@ def test_extract_price_requires_multiple_explicit_size_labels():
 def test_extract_price_preserves_explicit_size_prices():
     price, sizes = B._extract_price([
         _yen("小¥440", height=12, cx=0),
-        _yen("中¥528", height=20, cx=100),
-        _yen("大¥660", height=12, cx=200),
-    ], anchor_cx=100)
+        _yen("中¥528", height=20, cx=200),
+        _yen("大¥660", height=12, cx=400),
+    ], anchor_cx=200, infer_unlabeled_sizes=True)
     assert price == 528
     assert sizes == {"小": 440, "中": 528, "大": 660}
 
@@ -110,7 +111,7 @@ def test_is_name_accepts_numeric_product_name_for_card_bounds():
     assert not B._is_name({"text": "中528", "y0": 0, "y1": 100}, 50)
 
 
-def test_extract_price_requires_center_size_label():
+def test_extract_price_rejects_two_labels_without_center():
     price, sizes = B._extract_price([
         _yen("小¥77", height=12, cx=0),
         _yen("大¥99", height=12, cx=100),
@@ -124,7 +125,7 @@ def test_extract_price_restores_aligned_unlabeled_sizes():
         _yen("¥143", height=12, cx=0, cy=100),
         _yen("¥187", height=20, cx=100, cy=100),
         _yen("¥231", height=12, cx=200, cy=100),
-    ], anchor_cx=100)
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
     assert price == 187
     assert sizes == {"小": 143, "中": 187, "大": 231}
 
@@ -135,7 +136,7 @@ def test_extract_price_ignores_extra_mini_price():
         _yen("¥143", height=12, cx=40, cy=100),
         _yen("¥187", height=20, cx=100, cy=100),
         _yen("¥231", height=12, cx=160, cy=100),
-    ], anchor_cx=100)
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
     assert price == 187
     assert sizes == {"小": 143, "中": 187, "大": 231}
 
@@ -145,6 +146,68 @@ def test_extract_price_completes_one_missing_size_label():
         _yen("小¥143", height=12, cx=0, cy=100),
         _yen("中¥187", height=20, cx=100, cy=100),
         _yen("¥231", height=12, cx=200, cy=100),
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
+    assert price == 187
+    assert sizes == {"小": 143, "中": 187, "大": 231}
+
+
+def test_extract_price_completes_missing_center_label():
+    price, sizes = B._extract_price([
+        _yen("小¥143", height=12, cx=0, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("大¥231", height=12, cx=200, cy=100),
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
+    assert price == 187
+    assert sizes == {"小": 143, "中": 187, "大": 231}
+
+
+def test_extract_price_requires_three_prices_in_same_row():
+    price, sizes = B._extract_price([
+        _yen("¥143", height=12, cx=0, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=200, cy=300),
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
+    assert price == 187
+    assert sizes == {}
+
+
+def test_extract_price_rejects_one_sided_unlabeled_prices():
+    price, sizes = B._extract_price([
+        _yen("¥99", height=12, cx=0, cy=100),
+        _yen("¥143", height=12, cx=40, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
+    assert price == 187
+    assert sizes == {}
+
+
+def test_extract_price_keeps_unlabeled_size_fallback_opt_in():
+    price, sizes = B._extract_price([
+        _yen("¥143", height=12, cx=0, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=200, cy=100),
     ], anchor_cx=100)
+    assert price == 187
+    assert sizes == {}
+
+
+def test_extract_price_ignores_far_same_row_card_price():
+    price, sizes = B._extract_price([
+        _yen("¥143", height=12, cx=0, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=200, cy=100),
+        _yen("¥253", height=12, cx=500, cy=100),
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
+    assert price == 187
+    assert sizes == {"小": 143, "中": 187, "大": 231}
+
+
+def test_extract_price_ignores_far_labeled_card_price():
+    price, sizes = B._extract_price([
+        _yen("¥143", height=12, cx=0, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=200, cy=100),
+        _yen("小¥99", height=12, cx=500, cy=100),
+    ], anchor_cx=100, infer_unlabeled_sizes=True)
     assert price == 187
     assert sizes == {"小": 143, "中": 187, "大": 231}

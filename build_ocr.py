@@ -12,7 +12,7 @@
 - 料理名 = 文字高さが大きいテキスト(実測: 料理名h32-73 vs ラベル類h8-16)
 - 料理名をアンカーに近傍からカード矩形を自動算出(列数はハードコードしない)
 - kcal付き数値(料理名に最も近いもの)を栄養行アンカーに、右隣を P/F/C と対応
-- ¥付き数値から価格。小中大の明示ラベルが複数（中を含む）ある場合だけsizesを構築し、単一価格をサイズ推定しない
+- ¥付き数値から価格。明示ラベルを優先し、ライスだけ同じ価格行の複数値から小中大を復元する
 
 依存: httpx, beautifulsoup4, paddlepaddle, paddleocr, pillow, python-dotenv
 ローカル実行: ~/.local/menu-ocr-venv/bin/python3 build.py
@@ -127,6 +127,7 @@ NAME_PATTERNS = [
     (re.compile(r"^ースカツ"), "ロースカツ"),
 ]
 SIZE_ORDER = {"小": 0, "並": 1, "中": 2, "大": 3}
+RICE_NAMES = frozenset(("ライス", "ごはん", "ご飯", "白米"))
 
 
 def fix_dish_name(name):
@@ -284,8 +285,8 @@ def _extract_nutrition(elems, name_cx, h):
     return out
 
 
-def _extract_price(elems, anchor_cx=None):
-    """¥付き価格を読み、同じ価格行の複数値だけサイズ展開する"""
+def _extract_price(elems, anchor_cx=None, infer_unlabeled_sizes=False):
+    """¥付き価格を読み、明示ラベルまたはライスの価格行からサイズ展開する"""
     yen = [e for e in elems
            if ("¥" in e["text"] or "￥" in e["text"]) and re.search(r"\d", e["text"])
            and not any(w in e["text"] for w in ("本体", "税", "(", "（"))]
@@ -319,32 +320,70 @@ def _extract_price(elems, anchor_cx=None):
     if len(labeled) == 3 and "中" in labeled:
         return labeled["中"], labeled
 
-    # ラベルがOCRで落ちても、3つ以上の価格が同じ行に並ぶ場合だけ
-    # サイズ展開を復元する。隣カードの価格をサイズ扱いしないため、
-    # 価格数・行揃い・既知の中価格を条件にする。
-    if len(valid) < 3 or (labeled and "中" not in labeled):
+    if not infer_unlabeled_sizes:
+        if len(labeled) >= 2 and "中" in labeled:
+            return labeled["中"], labeled
         return main_v, {}
+
+    # ライスでラベルがOCRから落ちても、3つ以上の価格が同じ行の
+    # 連続した価格クラスタに並ぶ場合だけサイズ展開を復元する。
+    # 隣カードの価格をサイズ扱いしないため、価格数・行揃い・価格間隔・
+    # 既知の中価格または主価格を条件にする。
     row_tol = max(8, (main_e["y1"] - main_e["y0"]) * 1.5)
-    row_unlabeled = [
-        (v, e) for v, e in unlabeled
+    row_valid = [
+        (v, e) for v, e in valid
         if abs(e["cy"] - main_e["cy"]) <= row_tol
     ]
-    mid = labeled.get("中", main_v)
+    if len(row_valid) < 3:
+        if len(labeled) >= 2 and "中" in labeled:
+            return labeled["中"], labeled
+        return main_v, {}
+
+    ordered = sorted(row_valid, key=lambda item: item[1]["cx"])
+    main_index = next(i for i, (_, e) in enumerate(ordered) if e is main_e)
+    max_gap = max(120, (main_e["y1"] - main_e["y0"]) * 3)
+    cluster = [ordered[main_index]]
+    i = main_index - 1
+    while i >= 0 and cluster[0][1]["cx"] - ordered[i][1]["cx"] <= max_gap:
+        cluster.insert(0, ordered[i])
+        i -= 1
+    i = main_index + 1
+    while i < len(ordered) and ordered[i][1]["cx"] - cluster[-1][1]["cx"] <= max_gap:
+        cluster.append(ordered[i])
+        i += 1
+    if len(cluster) < 3:
+        return main_v, {}
+    cluster_labeled = {}
+    row_unlabeled = []
+    for v, e in cluster:
+        m = re.search(r"[小中大]", e["text"])
+        if m:
+            cluster_labeled[m.group()] = v
+        else:
+            row_unlabeled.append((v, e))
+    if cluster_labeled and "中" not in cluster_labeled:
+        if not {"小", "大"} <= cluster_labeled.keys() or not cluster_labeled["小"] < main_v < cluster_labeled["大"]:
+            return main_v, {}
+
+    mid = cluster_labeled.get("中", main_v)
     ups = [v for v, _ in row_unlabeled if v > mid]
     downs = [v for v, _ in row_unlabeled if v < mid]
 
-    sizes = dict(labeled)
+    sizes = dict(cluster_labeled)
     sizes.setdefault("中", mid)
     if "大" not in sizes and ups:
         sizes["大"] = max(ups)
     if "小" not in sizes and downs:
         sizes["小"] = max(downs)
-    if len(sizes) < 2:
+    if "小" not in sizes or "大" not in sizes:
+        if len(cluster_labeled) >= 2 and "中" in cluster_labeled:
+            return sizes["中"], sizes
         return main_v, {}
     return sizes["中"], sizes
 
+
 def _guess_category(name):
-    if name.strip() in ("ライス", "ごはん", "ご飯", "白米"):
+    if name.strip() in RICE_NAMES:
         return "ご飯"
     if re.search(r"カレー|丼|ライス", name):
         return "丼"
@@ -418,7 +457,8 @@ def ocr_dishes(img_bytes):
     for c in _build_cards(names, w, h):
         elems = [o for o in items
                  if c["L"] <= o["cx"] <= c["R"] and c["T"] <= o["cy"] <= c["B"]]
-        price, sizes = _extract_price(elems, c["cx"])
+        infer_sizes = c["name"].strip() in RICE_NAMES
+        price, sizes = _extract_price(elems, c["cx"], infer_sizes)
         if price is None:
             continue  # 価格が無い＝料理カードではない
         nut = _extract_nutrition(elems, c["cx"], h)
