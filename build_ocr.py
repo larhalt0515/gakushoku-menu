@@ -285,7 +285,7 @@ def _extract_nutrition(elems, name_cx, h):
 
 
 def _extract_price(elems, anchor_cx=None):
-    """¥付き価格を読み、サイズ展開は明示ラベルが複数ある場合だけ採用する"""
+    """¥付き価格を読み、同じ価格行の複数値だけサイズ展開する"""
     yen = [e for e in elems
            if ("¥" in e["text"] or "￥" in e["text"]) and re.search(r"\d", e["text"])
            and not any(w in e["text"] for w in ("本体", "税", "(", "（"))]
@@ -293,6 +293,7 @@ def _extract_price(elems, anchor_cx=None):
         return None, {}
 
     labeled = {}
+    unlabeled = []
     valid = []
     for e in yen:
         v = _numi(e["text"])
@@ -302,6 +303,8 @@ def _extract_price(elems, anchor_cx=None):
         m = re.search(r"[小中大]", e["text"])
         if m:
             labeled[m.group()] = v
+        else:
+            unlabeled.append((v, e))
     if not valid:
         return None, {}
 
@@ -311,13 +314,34 @@ def _extract_price(elems, anchor_cx=None):
         proximity = -abs(e["cx"] - anchor_cx) if anchor_cx is not None else 0
         return height, proximity
 
-    main_v, _ = max(valid, key=main_key)
-    # サイズラベルのない価格を大小関係だけで小/中/大へ推定しない。
-    # 隣カードの価格が混入しても単一価格として扱い、誤った77/99表示を防ぐ。
-    if len(labeled) < 2 or "中" not in labeled:
-        return main_v, {}
-    return labeled["中"], labeled
+    main_v, main_e = max(valid, key=main_key)
+    # 3サイズすべての明示ラベルがある場合は、その値をそのまま採用する。
+    if len(labeled) == 3 and "中" in labeled:
+        return labeled["中"], labeled
 
+    # ラベルがOCRで落ちても、3つ以上の価格が同じ行に並ぶ場合だけ
+    # サイズ展開を復元する。隣カードの価格をサイズ扱いしないため、
+    # 価格数・行揃い・既知の中価格を条件にする。
+    if len(valid) < 3 or (labeled and "中" not in labeled):
+        return main_v, {}
+    row_tol = max(8, (main_e["y1"] - main_e["y0"]) * 1.5)
+    row_unlabeled = [
+        (v, e) for v, e in unlabeled
+        if abs(e["cy"] - main_e["cy"]) <= row_tol
+    ]
+    mid = labeled.get("中", main_v)
+    ups = [v for v, _ in row_unlabeled if v > mid]
+    downs = [v for v, _ in row_unlabeled if v < mid]
+
+    sizes = dict(labeled)
+    sizes.setdefault("中", mid)
+    if "大" not in sizes and ups:
+        sizes["大"] = max(ups)
+    if "小" not in sizes and downs:
+        sizes["小"] = max(downs)
+    if len(sizes) < 2:
+        return main_v, {}
+    return sizes["中"], sizes
 
 def _guess_category(name):
     if name.strip() in ("ライス", "ごはん", "ご飯", "白米"):
@@ -429,7 +453,7 @@ def health_verdict(stats, limit=CRASH_RATE_LIMIT):
 
 # cacheスキーマのパーサ版。_extract_price 等の抽出ロジックを直したら +1 する。
 # 読み込み時に pv < PARSER_VERSION の v2キャッシュは再解析され、抽出の改善が反映される。
-PARSER_VERSION = 2
+PARSER_VERSION = 3
 
 
 def dishes_from_cache(cached):

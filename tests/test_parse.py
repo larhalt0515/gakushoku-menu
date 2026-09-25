@@ -73,8 +73,8 @@ def test_parse_image_urls_http_to_https():
     assert B.parse_image_urls(html) == ["https://signage.univcoop-tokai.net/c/x.png"]
 
 
-def _yen(text, height, cx):
-    return {"text": text, "y0": 0, "y1": height, "cx": cx}
+def _yen(text, height, cx, cy=0):
+    return {"text": text, "y0": 0, "y1": height, "cx": cx, "cy": cy}
 
 
 def test_extract_price_does_not_infer_sizes_from_nearby_prices():
@@ -117,3 +117,34 @@ def test_extract_price_requires_center_size_label():
     ], anchor_cx=100)
     assert price == 99
     assert sizes == {}
+
+
+def test_extract_price_restores_aligned_unlabeled_sizes():
+    price, sizes = B._extract_price([
+        _yen("¥143", height=12, cx=0, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=200, cy=100),
+    ], anchor_cx=100)
+    assert price == 187
+    assert sizes == {"小": 143, "中": 187, "大": 231}
+
+
+def test_extract_price_ignores_extra_mini_price():
+    price, sizes = B._extract_price([
+        _yen("¥99", height=12, cx=0, cy=100),
+        _yen("¥143", height=12, cx=40, cy=100),
+        _yen("¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=160, cy=100),
+    ], anchor_cx=100)
+    assert price == 187
+    assert sizes == {"小": 143, "中": 187, "大": 231}
+
+
+def test_extract_price_completes_one_missing_size_label():
+    price, sizes = B._extract_price([
+        _yen("小¥143", height=12, cx=0, cy=100),
+        _yen("中¥187", height=20, cx=100, cy=100),
+        _yen("¥231", height=12, cx=200, cy=100),
+    ], anchor_cx=100)
+    assert price == 187
+    assert sizes == {"小": 143, "中": 187, "大": 231}
