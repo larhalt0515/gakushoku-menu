@@ -1,0 +1,120 @@
+{
+ "schema": 2,
+ "pv": 3,
+ "raw": [
+  {
+   "name": "ジューシー唐揚げ",
+   "price": 341,
+   "sizes": {},
+   "energy": 267,
+   "protein": 21.1,
+   "fat": 13.7,
+   "carb": 15.2,
+   "category": "主菜"
+  },
+  {
+   "name": "豚肉チンジャオ黒胡椒炒め",
+   "price": 297,
+   "sizes": {},
+   "energy": 208,
+   "protein": 16.1,
+   "fat": 12.0,
+   "carb": 10.5,
+   "category": "主菜"
+  },
+  {
+   "name": "胡麻だれハンバーグ",
+   "price": 253,
+   "sizes": {},
+   "energy": 314,
+   "protein": 15.2,
+   "fat": 21.0,
+   "carb": 15.1,
+   "category": "主菜"
+  },
+  {
+   "name": "ロースカツおろしポン酢",
+   "price": 297,
+   "sizes": {},
+   "energy": 387,
+   "protein": 15.2,
+   "fat": 26.0,
+   "carb": 22.6,
+   "category": "主菜"
+  },
+  {
+   "name": "甘辛チキンカツ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 722,
+   "protein": 22.1,
+   "fat": 22.5,
+   "carb": 112.8,
+   "category": "丼"
+  },
+  {
+   "name": "海鮮丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 440,
+   "protein": 14.6,
+   "fat": 2.8,
+   "carb": 91.8,
+   "category": "丼"
+  },
+  {
+   "name": "鶏天うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 518,
+   "protein": 21.6,
+   "fat": 10.5,
+   "carb": 84.7,
+   "category": "麺"
+  },
+  {
+   "name": "濃厚煮干しラーメン",
+   "price": 550,
+   "sizes": {},
+   "energy": 567,
+   "protein": 22.1,
+   "fat": 19.4,
+   "carb": 76.0,
+   "category": "麺"
+  },
+  {
+   "name": "さば生姜煮",
+   "price": 253,
+   "sizes": {},
+   "energy": 265,
+   "protein": 12.8,
+   "fat": 19.3,
+   "carb": 7.6,
+   "category": "小鉢"
+  },
+  {
+   "name": "チキンカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 826,
+   "protein": 24.0,
+   "fat": 31.3,
+   "carb": 116.5,
+   "category": "丼"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {},
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  }
+ ]
+}
