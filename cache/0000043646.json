@@ -1,0 +1,120 @@
+{
+ "schema": 2,
+ "pv": 3,
+ "raw": [
+  {
+   "name": "ジューシー鶏カツ麻婆ソース",
+   "price": 341,
+   "sizes": {},
+   "energy": 433,
+   "protein": 15.4,
+   "fat": 31.5,
+   "carb": 22.6,
+   "category": "主菜"
+  },
+  {
+   "name": "豚肉の旨辛みそ炒め",
+   "price": 297,
+   "sizes": {},
+   "energy": 281,
+   "protein": 20.5,
+   "fat": 15.5,
+   "carb": 16.9,
+   "category": "主菜"
+  },
+  {
+   "name": "ハンバーグデミソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 237,
+   "protein": 15.0,
+   "fat": 12.8,
+   "carb": 14.3,
+   "category": "主菜"
+  },
+  {
+   "name": "東西",
+   "price": 297,
+   "sizes": {},
+   "energy": 438,
+   "protein": 16.5,
+   "fat": 33.5,
+   "carb": 16.9,
+   "category": "その他"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {},
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "東西",
+   "price": 528,
+   "sizes": {
+    "中": 528,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 701,
+   "protein": 18.7,
+   "fat": 20.4,
+   "carb": 113.2,
+   "category": "その他"
+  },
+  {
+   "name": "明太釜玉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 446,
+   "protein": 12.3,
+   "fat": 7.8,
+   "carb": 81.9,
+   "category": "麺"
+  },
+  {
+   "name": "東西",
+   "price": 550,
+   "sizes": {},
+   "energy": 660,
+   "protein": 30.9,
+   "fat": 22.6,
+   "carb": 83.9,
+   "category": "その他"
+  },
+  {
+   "name": "しまほっけ焼き",
+   "price": 253,
+   "sizes": {},
+   "energy": 61,
+   "protein": 12.8,
+   "fat": 0.9,
+   "carb": 0.4,
+   "category": "主菜"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {},
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  }
+ ]
+}

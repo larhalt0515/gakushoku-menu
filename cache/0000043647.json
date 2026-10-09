@@ -1,0 +1,106 @@
+{
+ "schema": 2,
+ "pv": 3,
+ "raw": [
+  {
+   "name": "ポテト野菜サラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 89,
+   "protein": 1.7,
+   "fat": 4.2,
+   "carb": 12.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "東西",
+   "price": 132,
+   "sizes": {},
+   "energy": 241,
+   "protein": 7.0,
+   "fat": 15.7,
+   "carb": 18.0,
+   "category": "その他"
+  },
+  {
+   "name": "小松菜ときざみ揚げのおひたし",
+   "price": 99,
+   "sizes": {},
+   "energy": 32,
+   "protein": 2.7,
+   "fat": 1.2,
+   "carb": 2.7,
+   "category": "主菜"
+  },
+  {
+   "name": "オクラ巣ごもり玉子",
+   "price": 132,
+   "sizes": {},
+   "energy": 81,
+   "protein": 6.7,
+   "fat": 5.5,
+   "carb": 3.0,
+   "category": "その他"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {},
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "東西",
+   "price": 77,
+   "sizes": {},
+   "energy": 42,
+   "protein": 5.8,
+   "fat": 0.6,
+   "carb": 4.0,
+   "category": "その他"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ひじき煮",
+   "price": 77,
+   "sizes": {},
+   "energy": 48,
+   "protein": 1.6,
+   "fat": 2.4,
+   "carb": 4.9,
+   "category": "小鉢"
+  },
+  {
+   "name": "静岡茶のプチ蒸しパン",
+   "price": 99,
+   "sizes": {},
+   "energy": 95,
+   "protein": 2.2,
+   "fat": 2.6,
+   "carb": 16.0,
+   "category": "その他"
+  },
+  {
+   "name": "フルーツミックスヨーグルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 51,
+   "protein": 1.5,
+   "fat": 1.2,
+   "carb": 9.6,
+   "category": "デザート"
+  }
+ ]
+}
