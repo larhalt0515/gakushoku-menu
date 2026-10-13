@@ -1,0 +1,106 @@
+{
+ "schema": 2,
+ "pv": 3,
+ "raw": [
+  {
+   "name": "蒸し鶏わかめサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 32,
+   "protein": 5.2,
+   "fat": 0.5,
+   "carb": 2.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "東西",
+   "price": 143,
+   "sizes": {},
+   "energy": 152,
+   "protein": 5.5,
+   "fat": 9.6,
+   "carb": 10.7,
+   "category": "その他"
+  },
+  {
+   "name": "オクラ巣ごもり玉子",
+   "price": 132,
+   "sizes": {},
+   "energy": 81,
+   "protein": 6.7,
+   "fat": 5.5,
+   "carb": 3.0,
+   "category": "その他"
+  },
+  {
+   "name": "ほうれん草ソテー",
+   "price": 99,
+   "sizes": {},
+   "energy": 20,
+   "protein": 1.3,
+   "fat": 0.8,
+   "carb": 1.9,
+   "category": "その他"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {},
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "東西",
+   "price": 77,
+   "sizes": {},
+   "energy": 58,
+   "protein": 4.8,
+   "fat": 2.6,
+   "carb": 4.7,
+   "category": "その他"
+  },
+  {
+   "name": "きんぴらごぼう",
+   "price": 77,
+   "sizes": {},
+   "energy": 39,
+   "protein": 0.8,
+   "fat": 0.9,
+   "carb": 7.0,
+   "category": "小鉢"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "温州みかんゼリー",
+   "price": 121,
+   "sizes": {},
+   "energy": 61,
+   "protein": 0.3,
+   "fat": 0.0,
+   "carb": 15.1,
+   "category": "デザート"
+  },
+  {
+   "name": "さつま芋と栗のタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 107,
+   "protein": 0.7,
+   "fat": 4.9,
+   "carb": 15.2,
+   "category": "デザート"
+  }
+ ]
+}
