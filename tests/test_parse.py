@@ -111,6 +111,11 @@ def test_is_name_accepts_numeric_product_name_for_card_bounds():
     assert not B._is_name({"text": "中528", "y0": 0, "y1": 100}, 50)
 
 
+def test_is_name_rejects_known_ocr_artifact():
+    assert not B._is_name({"text": "東西", "y0": 0, "y1": 100}, 50)
+    assert B._is_name({"text": "唐揚げレモンタルタル", "y0": 0, "y1": 100}, 50)
+
+
 def test_extract_price_rejects_two_labels_without_center():
     price, sizes = B._extract_price([
         _yen("小¥77", height=12, cx=0),

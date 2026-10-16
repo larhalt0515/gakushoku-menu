@@ -181,6 +181,7 @@ NUTRI_WORDS = ["エネルギー", "タンパク質", "脂質", "炭水化物", "
                "カルシウム", "野菜量", "アレルゲン", "食材中"]
 JUNK = ["本体", "税込", "税抜", "サイズ", "のもの", "栄養", "おすすめ", "今日",
         "MENU", "TODAY", "CO-OP", "univ", "組価", "です", "表示", "当店"]
+OCR_ARTIFACT_NAMES = frozenset(("東西",))
 JP = re.compile(r"[ぁ-んァ-ヶ一-龥]")
 VALUE_PAT = re.compile(r"[0-9]+(?:\.[0-9]+)?(?:g|kcal|mg)?$")
 
@@ -209,6 +210,8 @@ def _is_name(o, name_min_h):
     t = o["text"].strip()
     h = o["y1"] - o["y0"]
     if len(t) < 2 or h < name_min_h:
+        return False
+    if t in OCR_ARTIFACT_NAMES:
         return False
     if "¥" in t or "￥" in t:
         return False
@@ -493,7 +496,7 @@ def health_verdict(stats, limit=CRASH_RATE_LIMIT):
 
 # cacheスキーマのパーサ版。_extract_price 等の抽出ロジックを直したら +1 する。
 # 読み込み時に pv < PARSER_VERSION の v2キャッシュは再解析され、抽出の改善が反映される。
-PARSER_VERSION = 3
+PARSER_VERSION = 4
 
 
 def dishes_from_cache(cached):
