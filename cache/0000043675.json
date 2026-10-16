@@ -1,7 +1,17 @@
 {
  "schema": 2,
- "pv": 3,
+ "pv": 4,
  "raw": [
+  {
+   "name": "気仙沼まぐろカツ",
+   "price": 143,
+   "sizes": {},
+   "energy": 152,
+   "protein": 5.5,
+   "fat": 9.6,
+   "carb": 10.7,
+   "category": "主菜"
+  },
   {
    "name": "蒸し鶏わかめサラダ",
    "price": 132,
@@ -11,16 +21,6 @@
    "fat": 0.5,
    "carb": 2.5,
    "category": "サラダ"
-  },
-  {
-   "name": "東西",
-   "price": 143,
-   "sizes": {},
-   "energy": 152,
-   "protein": 5.5,
-   "fat": 9.6,
-   "carb": 10.7,
-   "category": "その他"
   },
   {
    "name": "オクラ巣ごもり玉子",
@@ -43,6 +43,16 @@
    "category": "その他"
   },
   {
+   "name": "蒸し鶏とオクラのわさび和え",
+   "price": 99,
+   "sizes": {},
+   "energy": 58,
+   "protein": 4.8,
+   "fat": 2.6,
+   "carb": 4.7,
+   "category": "小鉢"
+  },
+  {
    "name": "ほうれん草胡麻和え",
    "price": 77,
    "sizes": {},
@@ -51,16 +61,6 @@
    "fat": 1.3,
    "carb": 3.8,
    "category": "小鉢"
-  },
-  {
-   "name": "東西",
-   "price": 77,
-   "sizes": {},
-   "energy": 58,
-   "protein": 4.8,
-   "fat": 2.6,
-   "carb": 4.7,
-   "category": "その他"
   },
   {
    "name": "きんぴらごぼう",
