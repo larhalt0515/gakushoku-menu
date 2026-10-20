@@ -1,0 +1,100 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "ジューシーメンチカツ",
+   "price": 341,
+   "sizes": {},
+   "energy": 579,
+   "protein": 19.2,
+   "fat": 41.0,
+   "carb": 36.8,
+   "category": "主菜"
+  },
+  {
+   "name": "豚肉キムチ炒め",
+   "price": 297,
+   "sizes": {},
+   "energy": 190,
+   "protein": 13.2,
+   "fat": 8.6,
+   "carb": 16.3,
+   "category": "主菜"
+  },
+  {
+   "name": "白身フライタルタルソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 435,
+   "protein": 11.4,
+   "fat": 30.8,
+   "carb": 28.5,
+   "category": "主菜"
+  },
+  {
+   "name": "とり天葱生姜だれ",
+   "price": 297,
+   "sizes": {},
+   "energy": 352,
+   "protein": 17.1,
+   "fat": 23.2,
+   "carb": 18.7,
+   "category": "その他"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "ハッシュドビーフ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 537,
+   "protein": 12.5,
+   "fat": 12.6,
+   "carb": 97.2,
+   "category": "丼"
+  },
+  {
+   "name": "さば塩焼き",
+   "price": 253,
+   "sizes": {},
+   "energy": 268,
+   "protein": 15.9,
+   "fat": 22.7,
+   "carb": 0.0,
+   "category": "主菜"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {},
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  }
+ ]
+}
