@@ -1,0 +1,174 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "鶏と野菜のトマト煮込み",
+   "price": 297,
+   "sizes": {},
+   "energy": 219,
+   "protein": 10.8,
+   "fat": 7.4,
+   "carb": 28.4,
+   "category": "小鉢"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "おろしカツ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 662,
+   "protein": 17.9,
+   "fat": 20.4,
+   "carb": 104.0,
+   "category": "丼"
+  },
+  {
+   "name": "温玉ぶっかけうどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 536,
+   "protein": 16.5,
+   "fat": 17.4,
+   "carb": 79.7,
+   "category": "麺"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "白身フライタルタルソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 435,
+   "protein": 11.4,
+   "fat": 30.8,
+   "carb": 28.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  },
+  {
+   "name": "大学芋",
+   "price": 121,
+   "sizes": {},
+   "energy": 157,
+   "protein": 0.6,
+   "fat": 3.2,
+   "carb": 31.7,
+   "category": "デザート"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "大": 231,
+    "中": 187,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "わかめ玉子サラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 60,
+   "protein": 2.4,
+   "fat": 4.4,
+   "carb": 3.6,
+   "category": "サラダ"
+  },
+  {
+   "name": "オクラおひたし",
+   "price": 77,
+   "sizes": {},
+   "energy": 17,
+   "protein": 1.2,
+   "fat": 0.1,
+   "carb": 4.1,
+   "category": "小鉢"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {},
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "さっぱり揚げ出し茄子",
+   "price": 99,
+   "sizes": {},
+   "energy": 136,
+   "protein": 1.2,
+   "fat": 12.1,
+   "carb": 7.2,
+   "category": "主菜"
+  },
+  {
+   "name": "かぼちゃプリンタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 107,
+   "protein": 1.7,
+   "fat": 5.8,
+   "carb": 11.8,
+   "category": "デザート"
+  },
+  {
+   "name": "春巻き",
+   "price": 132,
+   "sizes": {},
+   "energy": 305,
+   "protein": 3.9,
+   "fat": 23.1,
+   "carb": 20.7,
+   "category": "その他"
+  },
+  {
+   "name": "ハッシュポテト",
+   "price": 132,
+   "sizes": {},
+   "energy": 130,
+   "protein": 1.4,
+   "fat": 6.9,
+   "carb": 14.7,
+   "category": "その他"
+  }
+ ]
+}
