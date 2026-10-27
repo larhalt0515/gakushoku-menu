@@ -1,0 +1,106 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "牛肉コロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 226,
+   "protein": 3.0,
+   "fat": 14.6,
+   "carb": 21.1,
+   "category": "その他"
+  },
+  {
+   "name": "マカロニコーンサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 113,
+   "protein": 2.3,
+   "fat": 6.6,
+   "carb": 12.7,
+   "category": "サラダ"
+  },
+  {
+   "name": "茄子のピリ辛胡麻風味",
+   "price": 99,
+   "sizes": {},
+   "energy": 97,
+   "protein": 0.7,
+   "fat": 7.8,
+   "carb": 6.7,
+   "category": "その他"
+  },
+  {
+   "name": "オクラ巣ごもり玉子",
+   "price": 132,
+   "sizes": {},
+   "energy": 81,
+   "protein": 6.7,
+   "fat": 5.5,
+   "carb": 3.0,
+   "category": "その他"
+  },
+  {
+   "name": "ブロッコリーシーザー和え",
+   "price": 99,
+   "sizes": {},
+   "energy": 45,
+   "protein": 2.5,
+   "fat": 2.7,
+   "carb": 4.2,
+   "category": "小鉢"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {},
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ポテトサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 98,
+   "protein": 0.9,
+   "fat": 6.0,
+   "carb": 10.0,
+   "category": "サラダ"
+  },
+  {
+   "name": "フルーツミックスヨーグルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 51,
+   "protein": 1.5,
+   "fat": 1.2,
+   "carb": 9.6,
+   "category": "デザート"
+  },
+  {
+   "name": "バナナクレープ",
+   "price": 99,
+   "sizes": {},
+   "energy": 83,
+   "protein": 0.8,
+   "fat": 5.1,
+   "carb": 8.5,
+   "category": "デザート"
+  }
+ ]
+}
