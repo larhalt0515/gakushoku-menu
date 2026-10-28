@@ -1,0 +1,160 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "ジューシー唐揚げ",
+   "price": 341,
+   "sizes": {},
+   "energy": 267,
+   "protein": 21.1,
+   "fat": 13.7,
+   "carb": 15.2,
+   "category": "主菜"
+  },
+  {
+   "name": "ねぎとろ丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 538,
+   "protein": 22.6,
+   "fat": 12.9,
+   "carb": 85.6,
+   "category": "丼"
+  },
+  {
+   "name": "揚げワンタン麺",
+   "price": 550,
+   "sizes": {},
+   "energy": 534,
+   "protein": 18.8,
+   "fat": 14.2,
+   "carb": 83.6,
+   "category": "麺"
+  },
+  {
+   "name": "とり天丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 620,
+   "protein": 23.5,
+   "fat": 12.0,
+   "carb": 108.0,
+   "category": "丼"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "豚塩カルビカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 686,
+   "protein": 15.0,
+   "fat": 24.8,
+   "carb": 101.6,
+   "category": "丼"
+  },
+  {
+   "name": "かつおカツおろしソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 319,
+   "protein": 9.2,
+   "fat": 19.9,
+   "carb": 25.9,
+   "category": "主菜"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {},
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "中華豆腐",
+   "price": 99,
+   "sizes": {},
+   "energy": 67,
+   "protein": 5.0,
+   "fat": 3.3,
+   "carb": 5.5,
+   "category": "その他"
+  },
+  {
+   "name": "キャラメルナッツショート",
+   "price": 165,
+   "sizes": {},
+   "energy": 122,
+   "protein": 1.7,
+   "fat": 8.6,
+   "carb": 9.6,
+   "category": "デザート"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {},
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "茄子のピリ辛胡麻風味",
+   "price": 99,
+   "sizes": {},
+   "energy": 102,
+   "protein": 0.7,
+   "fat": 8.0,
+   "carb": 6.9,
+   "category": "その他"
+  },
+  {
+   "name": "マカロニコーンサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 113,
+   "protein": 2.3,
+   "fat": 6.6,
+   "carb": 12.7,
+   "category": "サラダ"
+  },
+  {
+   "name": "すき焼きコロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 202,
+   "protein": 3.2,
+   "fat": 13.4,
+   "carb": 17.7,
+   "category": "主菜"
+  },
+  {
+   "name": "ちくわの磯辺揚げ",
+   "price": 132,
+   "sizes": {},
+   "energy": 98,
+   "protein": 8.1,
+   "fat": 3.3,
+   "carb": 8.9,
+   "category": "主菜"
+  }
+ ]
+}
