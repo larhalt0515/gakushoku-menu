@@ -1,0 +1,170 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "ローストチキン照り焼きソース",
+   "price": 341,
+   "sizes": {},
+   "energy": 220,
+   "protein": 17.4,
+   "fat": 14.3,
+   "carb": 5.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ロースカツ味噌だれ",
+   "price": 297,
+   "sizes": {},
+   "energy": 464,
+   "protein": 16.8,
+   "fat": 27.3,
+   "carb": 36.9,
+   "category": "主菜"
+  },
+  {
+   "name": "醤油ラーメン",
+   "price": 473,
+   "sizes": {},
+   "energy": 487,
+   "protein": 17.2,
+   "fat": 13.9,
+   "carb": 72.4,
+   "category": "麺"
+  },
+  {
+   "name": "ねぎとろ丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 538,
+   "protein": 22.6,
+   "fat": 12.9,
+   "carb": 85.6,
+   "category": "丼"
+  },
+  {
+   "name": "福島ソースカツ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 701,
+   "protein": 18.7,
+   "fat": 20.4,
+   "carb": 113.2,
+   "category": "丼"
+  },
+  {
+   "name": "ロースカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 787,
+   "protein": 20.5,
+   "fat": 29.2,
+   "carb": 112.6,
+   "category": "丼"
+  },
+  {
+   "name": "さば味噌煮",
+   "price": 253,
+   "sizes": {},
+   "energy": 204,
+   "protein": 16.6,
+   "fat": 14.4,
+   "carb": 6.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "味噌汁",
+   "price": 44,
+   "sizes": {},
+   "energy": 24,
+   "protein": 1.6,
+   "fat": 0.8,
+   "carb": 3.0,
+   "category": "汁物"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ミニサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 8,
+   "protein": 0.3,
+   "fat": 0.0,
+   "carb": 1.9,
+   "category": "サラダ"
+  },
+  {
+   "name": "きんぴらごぼう",
+   "price": 77,
+   "sizes": {},
+   "energy": 39,
+   "protein": 0.8,
+   "fat": 0.9,
+   "carb": 7.0,
+   "category": "小鉢"
+  },
+  {
+   "name": "オクラおひたし",
+   "price": 77,
+   "sizes": {},
+   "energy": 17,
+   "protein": 1.2,
+   "fat": 0.1,
+   "carb": 4.1,
+   "category": "小鉢"
+  },
+  {
+   "name": "マカロニサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 136,
+   "protein": 1.8,
+   "fat": 9.6,
+   "carb": 10.4,
+   "category": "サラダ"
+  },
+  {
+   "name": "牛肉コロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 226,
+   "protein": 3.0,
+   "fat": 14.6,
+   "carb": 21.1,
+   "category": "その他"
+  },
+  {
+   "name": "揚げ餃子",
+   "price": 77,
+   "sizes": {},
+   "energy": 87,
+   "protein": 2.6,
+   "fat": 4.7,
+   "carb": 8.6,
+   "category": "主菜"
+  },
+  {
+   "name": "モンブラン",
+   "price": 165,
+   "sizes": {},
+   "energy": 138,
+   "protein": 1.7,
+   "fat": 8.8,
+   "carb": 12.9,
+   "category": "デザート"
+  }
+ ]
+}
