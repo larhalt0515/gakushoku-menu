@@ -1,0 +1,170 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "ローストチキンおろしソース",
+   "price": 341,
+   "sizes": {},
+   "energy": 221,
+   "protein": 17.3,
+   "fat": 14.3,
+   "carb": 5.6,
+   "category": "その他"
+  },
+  {
+   "name": "カツ玉丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 700,
+   "protein": 20.3,
+   "fat": 24.7,
+   "carb": 101.4,
+   "category": "丼"
+  },
+  {
+   "name": "塩だれ唐揚げ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 752,
+   "protein": 19.0,
+   "fat": 26.6,
+   "carb": 109.8,
+   "category": "丼"
+  },
+  {
+   "name": "肉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 525,
+   "protein": 15.3,
+   "fat": 15.7,
+   "carb": 78.6,
+   "category": "麺"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "チーズカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 650,
+   "protein": 19.1,
+   "fat": 20.7,
+   "carb": 99.3,
+   "category": "丼"
+  },
+  {
+   "name": "白身フライタルタルソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 435,
+   "protein": 11.4,
+   "fat": 30.8,
+   "carb": 28.5,
+   "category": "主菜"
+  },
+  {
+   "name": "蒸し鶏わかめサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 32,
+   "protein": 5.2,
+   "fat": 0.5,
+   "carb": 2.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "中": 187,
+    "大": 231,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "巣ごもりコーン",
+   "price": 132,
+   "sizes": {},
+   "energy": 120,
+   "protein": 6.9,
+   "fat": 7.4,
+   "carb": 8.5,
+   "category": "その他"
+  },
+  {
+   "name": "鉄分たつぷり鶏きも煮",
+   "price": 99,
+   "sizes": {},
+   "energy": 73,
+   "protein": 7.8,
+   "fat": 1.9,
+   "carb": 5.5,
+   "category": "小鉢"
+  },
+  {
+   "name": "クリームコロッケ(カニ入り)",
+   "price": 132,
+   "sizes": {},
+   "energy": 215,
+   "protein": 3.6,
+   "fat": 14.8,
+   "carb": 17.4,
+   "category": "その他"
+  },
+  {
+   "name": "牛肉コロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 226,
+   "protein": 3.0,
+   "fat": 14.6,
+   "carb": 21.1,
+   "category": "その他"
+  },
+  {
+   "name": "ショコラケーキ",
+   "price": 165,
+   "sizes": {},
+   "energy": 126,
+   "protein": 1.3,
+   "fat": 9.2,
+   "carb": 10.0,
+   "category": "デザート"
+  },
+  {
+   "name": "りんごのタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 103,
+   "protein": 0.7,
+   "fat": 4.1,
+   "carb": 16.5,
+   "category": "デザート"
+  },
+  {
+   "name": "バナナクレープ",
+   "price": 99,
+   "sizes": {},
+   "energy": 83,
+   "protein": 0.8,
+   "fat": 5.1,
+   "carb": 8.5,
+   "category": "デザート"
+  }
+ ]
+}
