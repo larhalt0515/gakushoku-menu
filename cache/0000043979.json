@@ -1,0 +1,106 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "わかめ玉子サラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 60,
+   "protein": 2.4,
+   "fat": 4.4,
+   "carb": 3.6,
+   "category": "サラダ"
+  },
+  {
+   "name": "北海道",
+   "price": 143,
+   "sizes": {},
+   "energy": 199,
+   "protein": 2.6,
+   "fat": 13.4,
+   "carb": 17.4,
+   "category": "その他"
+  },
+  {
+   "name": "小松菜ときざみ揚げのおひたし",
+   "price": 99,
+   "sizes": {},
+   "energy": 32,
+   "protein": 2.7,
+   "fat": 1.2,
+   "carb": 2.7,
+   "category": "主菜"
+  },
+  {
+   "name": "北海道",
+   "price": 99,
+   "sizes": {},
+   "energy": 120,
+   "protein": 6.9,
+   "fat": 7.4,
+   "carb": 8.5,
+   "category": "その他"
+  },
+  {
+   "name": "蒸し鶏オクラ和風和え",
+   "price": 99,
+   "sizes": {},
+   "energy": 31,
+   "protein": 4.6,
+   "fat": 0.3,
+   "carb": 3.2,
+   "category": "小鉢"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {},
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "きんぴらごぼう",
+   "price": 77,
+   "sizes": {},
+   "energy": 39,
+   "protein": 0.8,
+   "fat": 0.9,
+   "carb": 7.0,
+   "category": "小鉢"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "フルーツミックスヨーグルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 51,
+   "protein": 1.5,
+   "fat": 1.2,
+   "carb": 9.6,
+   "category": "デザート"
+  },
+  {
+   "name": "レアチーズケーキ",
+   "price": 198,
+   "sizes": {},
+   "energy": 97,
+   "protein": 1.7,
+   "fat": 5.2,
+   "carb": 10.8,
+   "category": "デザート"
+  }
+ ]
+}

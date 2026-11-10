@@ -1,0 +1,178 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "ねぎとろ丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 538,
+   "protein": 22.6,
+   "fat": 12.9,
+   "carb": 85.6,
+   "category": "丼"
+  },
+  {
+   "name": "北海道",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 357,
+   "protein": 14.1,
+   "fat": 23.0,
+   "carb": 23.3,
+   "category": "その他"
+  },
+  {
+   "name": "甘辛チキンカツ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 722,
+   "protein": 22.1,
+   "fat": 22.5,
+   "carb": 112.8,
+   "category": "丼"
+  },
+  {
+   "name": "肉うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 525,
+   "protein": 15.3,
+   "fat": 15.7,
+   "carb": 78.6,
+   "category": "麺"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "チーズカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 650,
+   "protein": 19.1,
+   "fat": 20.7,
+   "carb": 99.3,
+   "category": "丼"
+  },
+  {
+   "name": "ハンバーグガーリックオニオン",
+   "price": 253,
+   "sizes": {},
+   "energy": 230,
+   "protein": 15.1,
+   "fat": 11.4,
+   "carb": 15.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "中": 187,
+    "大": 231,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "蒸し鶏わかめサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 32,
+   "protein": 5.2,
+   "fat": 0.5,
+   "carb": 2.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "ポテトサラダ",
+   "price": 77,
+   "sizes": {},
+   "energy": 98,
+   "protein": 0.9,
+   "fat": 6.0,
+   "carb": 10.0,
+   "category": "サラダ"
+  },
+  {
+   "name": "茄子のピリ辛胡麻風味",
+   "price": 99,
+   "sizes": {},
+   "energy": 102,
+   "protein": 0.7,
+   "fat": 8.0,
+   "carb": 6.9,
+   "category": "その他"
+  },
+  {
+   "name": "今金男爵コロッケ",
+   "price": 143,
+   "sizes": {},
+   "energy": 199,
+   "protein": 2.6,
+   "fat": 13.4,
+   "carb": 17.4,
+   "category": "その他"
+  },
+  {
+   "name": "ハッシュポテト",
+   "price": 132,
+   "sizes": {},
+   "energy": 130,
+   "protein": 1.4,
+   "fat": 6.9,
+   "carb": 14.7,
+   "category": "その他"
+  },
+  {
+   "name": "あまおう莓ムース",
+   "price": 165,
+   "sizes": {},
+   "energy": 78,
+   "protein": 0.8,
+   "fat": 5.5,
+   "carb": 6.4,
+   "category": "デザート"
+  },
+  {
+   "name": "さつま芋と栗のタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 107,
+   "protein": 0.7,
+   "fat": 4.9,
+   "carb": 15.2,
+   "category": "デザート"
+  },
+  {
+   "name": "エクレア",
+   "price": 99,
+   "sizes": {},
+   "energy": 94,
+   "protein": 2.2,
+   "fat": 6.5,
+   "carb": 6.4,
+   "category": "デザート"
+  }
+ ]
+}

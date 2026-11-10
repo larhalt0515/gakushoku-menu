@@ -1,0 +1,116 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "ローストチキンおろしソース",
+   "price": 341,
+   "sizes": {},
+   "energy": 221,
+   "protein": 17.3,
+   "fat": 14.3,
+   "carb": 5.6,
+   "category": "その他"
+  },
+  {
+   "name": "豚肉チンジャオ黒胡椒炒め",
+   "price": 297,
+   "sizes": {},
+   "energy": 208,
+   "protein": 16.1,
+   "fat": 12.0,
+   "carb": 10.5,
+   "category": "主菜"
+  },
+  {
+   "name": "ハンバーグデミソース",
+   "price": 253,
+   "sizes": {},
+   "energy": 237,
+   "protein": 15.0,
+   "fat": 12.8,
+   "carb": 14.3,
+   "category": "主菜"
+  },
+  {
+   "name": "北海道",
+   "price": 253,
+   "sizes": {},
+   "energy": 363,
+   "protein": 14.5,
+   "fat": 23.1,
+   "carb": 24.9,
+   "category": "その他"
+  },
+  {
+   "name": "甘辛チキンカツ丼",
+   "price": 660,
+   "sizes": {},
+   "energy": 722,
+   "protein": 22.1,
+   "fat": 22.5,
+   "carb": 112.8,
+   "category": "丼"
+  },
+  {
+   "name": "北海道",
+   "price": 660,
+   "sizes": {},
+   "energy": 510,
+   "protein": 15.7,
+   "fat": 12.7,
+   "carb": 86.1,
+   "category": "その他"
+  },
+  {
+   "name": "鶏天うどん",
+   "price": 473,
+   "sizes": {},
+   "energy": 518,
+   "protein": 21.6,
+   "fat": 10.5,
+   "carb": 84.7,
+   "category": "麺"
+  },
+  {
+   "name": "北海道",
+   "price": 550,
+   "sizes": {},
+   "energy": 550,
+   "protein": 22.0,
+   "fat": 14.1,
+   "carb": 83.4,
+   "category": "その他"
+  },
+  {
+   "name": "さば味噌煮",
+   "price": 253,
+   "sizes": {},
+   "energy": 272,
+   "protein": 13.0,
+   "fat": 19.5,
+   "carb": 8.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "かき揚げうどん",
+   "price": 396,
+   "sizes": {},
+   "energy": 457,
+   "protein": 11.2,
+   "fat": 4.2,
+   "carb": 93.4,
+   "category": "麺"
+  },
+  {
+   "name": "チキンカツカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 826,
+   "protein": 24.0,
+   "fat": 31.3,
+   "carb": 116.5,
+   "category": "丼"
+  }
+ ]
+}
