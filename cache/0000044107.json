@@ -1,0 +1,164 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "北海道",
+   "price": 660,
+   "sizes": {
+    "中": 660,
+    "小": 572,
+    "大": 792
+   },
+   "energy": 510,
+   "protein": 15.7,
+   "fat": 12.7,
+   "carb": 86.1,
+   "category": "その他"
+  },
+  {
+   "name": "おろしカツ丼",
+   "price": 528,
+   "sizes": {},
+   "energy": 662,
+   "protein": 17.9,
+   "fat": 20.4,
+   "carb": 104.0,
+   "category": "丼"
+  },
+  {
+   "name": "北海道",
+   "price": 550,
+   "sizes": {},
+   "energy": 550,
+   "protein": 22.0,
+   "fat": 14.1,
+   "carb": 83.4,
+   "category": "その他"
+  },
+  {
+   "name": "唐揚げカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 763,
+   "protein": 18.9,
+   "fat": 25.6,
+   "carb": 114.8,
+   "category": "丼"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "豚肉の生姜焼き",
+   "price": 297,
+   "sizes": {},
+   "energy": 240,
+   "protein": 19.6,
+   "fat": 14.7,
+   "carb": 9.2,
+   "category": "主菜"
+  },
+  {
+   "name": "蒸し鶏わかめサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 32,
+   "protein": 5.2,
+   "fat": 0.5,
+   "carb": 2.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "中": 187,
+    "大": 231,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "巣ごもりコーン",
+   "price": 132,
+   "sizes": {},
+   "energy": 120,
+   "protein": 6.9,
+   "fat": 7.4,
+   "carb": 8.5,
+   "category": "その他"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {},
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "すき焼きコロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 202,
+   "protein": 3.2,
+   "fat": 13.4,
+   "carb": 17.7,
+   "category": "主菜"
+  },
+  {
+   "name": "いももち",
+   "price": 132,
+   "sizes": {},
+   "energy": 191,
+   "protein": 1.9,
+   "fat": 7.2,
+   "carb": 29.5,
+   "category": "デザート"
+  },
+  {
+   "name": "生チョコケーキ",
+   "price": 165,
+   "sizes": {},
+   "energy": 98,
+   "protein": 1.5,
+   "fat": 5.9,
+   "carb": 9.6,
+   "category": "デザート"
+  },
+  {
+   "name": "バナナクレープ",
+   "price": 99,
+   "sizes": {},
+   "energy": 83,
+   "protein": 0.8,
+   "fat": 5.1,
+   "carb": 8.5,
+   "category": "デザート"
+  },
+  {
+   "name": "桃のタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 108,
+   "protein": 0.8,
+   "fat": 4.1,
+   "carb": 17.6,
+   "category": "デザート"
+  }
+ ]
+}
