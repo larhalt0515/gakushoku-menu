@@ -1,0 +1,182 @@
+{
+ "schema": 2,
+ "pv": 4,
+ "raw": [
+  {
+   "name": "北海道",
+   "price": 297,
+   "sizes": {},
+   "energy": 357,
+   "protein": 14.1,
+   "fat": 23.0,
+   "carb": 23.3,
+   "category": "その他"
+  },
+  {
+   "name": "北海道",
+   "price": 660,
+   "sizes": {
+    "中": 660,
+    "小": 572,
+    "大": 792
+   },
+   "energy": 510,
+   "protein": 15.7,
+   "fat": 12.7,
+   "carb": 86.1,
+   "category": "その他"
+  },
+  {
+   "name": "チキン竜田丼",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 764,
+   "protein": 23.5,
+   "fat": 27.6,
+   "carb": 108.9,
+   "category": "丼"
+  },
+  {
+   "name": "北海道",
+   "price": 583,
+   "sizes": {
+    "中": 583,
+    "小": 495,
+    "大": 715
+   },
+   "energy": 550,
+   "protein": 22.0,
+   "fat": 14.1,
+   "carb": 83.4,
+   "category": "その他"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "ロースカツおろしポン酢",
+   "price": 297,
+   "sizes": {},
+   "energy": 387,
+   "protein": 15.2,
+   "fat": 26.0,
+   "carb": 22.6,
+   "category": "主菜"
+  },
+  {
+   "name": "唐揚げカレー",
+   "price": 528,
+   "sizes": {},
+   "energy": 763,
+   "protein": 18.9,
+   "fat": 25.6,
+   "carb": 114.8,
+   "category": "丼"
+  },
+  {
+   "name": "ライス",
+   "price": 187,
+   "sizes": {
+    "中": 187,
+    "大": 231,
+    "小": 143
+   },
+   "energy": 343,
+   "protein": 5.5,
+   "fat": 0.7,
+   "carb": 81.6,
+   "category": "ご飯"
+  },
+  {
+   "name": "蒸し鶏わかめサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 32,
+   "protein": 5.2,
+   "fat": 0.5,
+   "carb": 2.5,
+   "category": "サラダ"
+  },
+  {
+   "name": "ブロッコリーたまごサラダ",
+   "price": 99,
+   "sizes": {},
+   "energy": 73,
+   "protein": 3.1,
+   "fat": 6.0,
+   "carb": 3.1,
+   "category": "サラダ"
+  },
+  {
+   "name": "ひじき煮",
+   "price": 77,
+   "sizes": {},
+   "energy": 48,
+   "protein": 1.6,
+   "fat": 2.4,
+   "carb": 4.9,
+   "category": "小鉢"
+  },
+  {
+   "name": "かぼちゃコロッケ",
+   "price": 132,
+   "sizes": {},
+   "energy": 225,
+   "protein": 2.2,
+   "fat": 13.6,
+   "carb": 24.2,
+   "category": "その他"
+  },
+  {
+   "name": "フライドポテト(スパイシー)",
+   "price": 132,
+   "sizes": {},
+   "energy": 188,
+   "protein": 1.9,
+   "fat": 9.7,
+   "carb": 23.3,
+   "category": "主菜"
+  },
+  {
+   "name": "キャラメルナッツショート",
+   "price": 165,
+   "sizes": {},
+   "energy": 122,
+   "protein": 1.7,
+   "fat": 8.6,
+   "carb": 9.6,
+   "category": "デザート"
+  },
+  {
+   "name": "焼きプリンタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 117,
+   "protein": 1.8,
+   "fat": 6.5,
+   "carb": 12.5,
+   "category": "デザート"
+  },
+  {
+   "name": "チョコクレープ",
+   "price": 99,
+   "sizes": {},
+   "energy": 86,
+   "protein": 0.8,
+   "fat": 5.2,
+   "carb": 8.4,
+   "category": "デザート"
+  }
+ ]
+}
