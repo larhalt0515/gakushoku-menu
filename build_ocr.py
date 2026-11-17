@@ -181,7 +181,10 @@ NUTRI_WORDS = ["エネルギー", "タンパク質", "脂質", "炭水化物", "
                "カルシウム", "野菜量", "アレルゲン", "食材中"]
 JUNK = ["本体", "税込", "税抜", "サイズ", "のもの", "栄養", "おすすめ", "今日",
         "MENU", "TODAY", "CO-OP", "univ", "組価", "です", "表示", "当店"]
-OCR_ARTIFACT_NAMES = frozenset(("東西",))
+# 料理写真に重なるフェアバッジ等のロゴ文字は文字高さが大きく料理名と誤検出される。
+# バッジが名前アンカーになると本物の料理名カードが潰れ、バッジ側が価格・栄養を
+# 拾って「北海道」という料理が出現する（2026-11 北海道フェアで実発生）。
+OCR_ARTIFACT_NAMES = frozenset(("東西", "北海道", "北海道フェア", "フェア"))
 JP = re.compile(r"[ぁ-んァ-ヶ一-龥]")
 VALUE_PAT = re.compile(r"[0-9]+(?:\.[0-9]+)?(?:g|kcal|mg)?$")
 
@@ -496,7 +499,7 @@ def health_verdict(stats, limit=CRASH_RATE_LIMIT):
 
 # cacheスキーマのパーサ版。_extract_price 等の抽出ロジックを直したら +1 する。
 # 読み込み時に pv < PARSER_VERSION の v2キャッシュは再解析され、抽出の改善が反映される。
-PARSER_VERSION = 4
+PARSER_VERSION = 5
 
 
 def dishes_from_cache(cached):
