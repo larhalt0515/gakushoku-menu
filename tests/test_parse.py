@@ -117,11 +117,11 @@ def test_is_name_rejects_known_ocr_artifact():
 
 
 def test_is_name_rejects_hokkaido_fair_badge():
-        # 料理写真に重なる「北海道フェア」バッジは料理名ではない（2026-11実発生）。
-        # バッジが名前になると本物の料理が「北海道」に化ける。
-        for badge in ("北海道", "北海道フェア", "フェア"):
-                    assert not B._is_name({"text": badge, "y0": 0, "y1": 100}, 50)
-                # 「北海道」を含む本物の料理名は弾かない（完全一致のみ対象）
+    # 料理写真に重なる「北海道フェア」バッジは料理名ではない（2026-11実発生）。
+    # バッジが名前になると本物の料理が「北海道」に化ける。
+    for badge in ("北海道", "北海道フェア", "フェア"):
+        assert not B._is_name({"text": badge, "y0": 0, "y1": 100}, 50)
+    # 「北海道」を含む本物の料理名は弾かない（完全一致のみ対象）
     assert B._is_name({"text": "北海道産ポテトサラダ", "y0": 0, "y1": 100}, 50)
 
 
