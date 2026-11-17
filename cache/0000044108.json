@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "pv": 4,
+ "pv": 5,
  "raw": [
   {
    "name": "チキン南蛮",
@@ -37,28 +37,14 @@
    "category": "丼"
   },
   {
-   "name": "北海道",
-   "price": 528,
-   "sizes": {
-    "中": 528,
-    "小": 440,
-    "大": 660
-   },
+   "name": "札幌味噌ラーメン",
+   "price": 550,
+   "sizes": {},
    "energy": 550,
    "protein": 22.0,
    "fat": 14.1,
    "carb": 83.4,
-   "category": "その他"
-  },
-  {
-   "name": "鮭チーズメンチハニーマスタード",
-   "price": 253,
-   "sizes": {},
-   "energy": 428,
-   "protein": 12.1,
-   "fat": 25.8,
-   "carb": 37.5,
-   "category": "その他"
+   "category": "麺"
   },
   {
    "name": "豚汁",
@@ -69,6 +55,16 @@
    "fat": 3.0,
    "carb": 8.0,
    "category": "汁物"
+  },
+  {
+   "name": "鮭チーズメンチハニーマスタード",
+   "price": 253,
+   "sizes": {},
+   "energy": 428,
+   "protein": 12.1,
+   "fat": 25.8,
+   "carb": 37.5,
+   "category": "その他"
   },
   {
    "name": "唐揚げカレー",

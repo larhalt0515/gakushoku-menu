@@ -1,6 +1,6 @@
 {
  "schema": 2,
- "pv": 4,
+ "pv": 5,
  "raw": [
   {
    "name": "ローストチキンおろしソース",
@@ -33,8 +33,8 @@
    "category": "主菜"
   },
   {
-   "name": "北海道",
-   "price": 253,
+   "name": "鶏ザンギ",
+   "price": 341,
    "sizes": {},
    "energy": 363,
    "protein": 14.5,
@@ -44,7 +44,7 @@
   },
   {
    "name": "甘辛チキンカツ丼",
-   "price": 660,
+   "price": 528,
    "sizes": {},
    "energy": 722,
    "protein": 22.1,
@@ -53,13 +53,13 @@
    "category": "丼"
   },
   {
-   "name": "北海道",
-   "price": 660,
+   "name": "ご注文ありがとうございました。",
+   "price": 528,
    "sizes": {},
-   "energy": 510,
-   "protein": 15.7,
-   "fat": 12.7,
-   "carb": 86.1,
+   "energy": 722,
+   "protein": 22.1,
+   "fat": 22.5,
+   "carb": 112.8,
    "category": "その他"
   },
   {
@@ -73,14 +73,14 @@
    "category": "麺"
   },
   {
-   "name": "北海道",
+   "name": "札幌味噌ラーメン",
    "price": 550,
    "sizes": {},
    "energy": 550,
    "protein": 22.0,
    "fat": 14.1,
    "carb": 83.4,
-   "category": "その他"
+   "category": "麺"
   },
   {
    "name": "さば味噌煮",

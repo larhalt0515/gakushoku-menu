@@ -1,29 +1,19 @@
 {
  "schema": 2,
- "pv": 4,
+ "pv": 5,
  "raw": [
   {
-   "name": "北海道",
-   "price": 297,
-   "sizes": {},
-   "energy": 357,
-   "protein": 14.1,
-   "fat": 23.0,
-   "carb": 23.3,
-   "category": "その他"
-  },
-  {
-   "name": "北海道",
+   "name": "鶏ザンギ",
    "price": 660,
    "sizes": {
     "中": 660,
     "小": 572,
     "大": 792
    },
-   "energy": 510,
-   "protein": 15.7,
-   "fat": 12.7,
-   "carb": 86.1,
+   "energy": 357,
+   "protein": 14.1,
+   "fat": 23.0,
+   "carb": 23.3,
    "category": "その他"
   },
   {
@@ -41,18 +31,14 @@
    "category": "丼"
   },
   {
-   "name": "北海道",
-   "price": 583,
-   "sizes": {
-    "中": 583,
-    "小": 495,
-    "大": 715
-   },
+   "name": "札幌味噌ラーメン",
+   "price": 550,
+   "sizes": {},
    "energy": 550,
    "protein": 22.0,
    "fat": 14.1,
    "carb": 83.4,
-   "category": "その他"
+   "category": "麺"
   },
   {
    "name": "豚汁",
