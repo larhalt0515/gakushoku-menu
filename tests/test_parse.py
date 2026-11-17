@@ -116,6 +116,15 @@ def test_is_name_rejects_known_ocr_artifact():
     assert B._is_name({"text": "唐揚げレモンタルタル", "y0": 0, "y1": 100}, 50)
 
 
+def test_is_name_rejects_hokkaido_fair_badge():
+        # 料理写真に重なる「北海道フェア」バッジは料理名ではない（2026-11実発生）。
+        # バッジが名前になると本物の料理が「北海道」に化ける。
+        for badge in ("北海道", "北海道フェア", "フェア"):
+                    assert not B._is_name({"text": badge, "y0": 0, "y1": 100}, 50)
+                # 「北海道」を含む本物の料理名は弾かない（完全一致のみ対象）
+    assert B._is_name({"text": "北海道産ポテトサラダ", "y0": 0, "y1": 100}, 50)
+
+
 def test_extract_price_rejects_two_labels_without_center():
     price, sizes = B._extract_price([
         _yen("小¥77", height=12, cx=0),
