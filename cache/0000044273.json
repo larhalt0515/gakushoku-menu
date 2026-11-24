@@ -1,0 +1,106 @@
+{
+ "schema": 2,
+ "pv": 5,
+ "raw": [
+  {
+   "name": "ハッシュポテト",
+   "price": 132,
+   "sizes": {},
+   "energy": 130,
+   "protein": 1.4,
+   "fat": 6.9,
+   "carb": 14.7,
+   "category": "その他"
+  },
+  {
+   "name": "マカロニコーンサラダ",
+   "price": 132,
+   "sizes": {},
+   "energy": 113,
+   "protein": 2.3,
+   "fat": 6.6,
+   "carb": 12.7,
+   "category": "サラダ"
+  },
+  {
+   "name": "オクラ巣ごもり玉子",
+   "price": 132,
+   "sizes": {},
+   "energy": 81,
+   "protein": 6.7,
+   "fat": 5.5,
+   "carb": 3.0,
+   "category": "その他"
+  },
+  {
+   "name": "アイデア",
+   "price": 132,
+   "sizes": {},
+   "energy": 171,
+   "protein": 1.8,
+   "fat": 16.5,
+   "carb": 5.3,
+   "category": "その他"
+  },
+  {
+   "name": "ほうれん草胡麻和え",
+   "price": 77,
+   "sizes": {},
+   "energy": 30,
+   "protein": 1.9,
+   "fat": 1.3,
+   "carb": 3.8,
+   "category": "小鉢"
+  },
+  {
+   "name": "アイデア",
+   "price": 77,
+   "sizes": {},
+   "energy": 44,
+   "protein": 5.8,
+   "fat": 0.9,
+   "carb": 4.3,
+   "category": "その他"
+  },
+  {
+   "name": "きんぴらごぼう",
+   "price": 77,
+   "sizes": {},
+   "energy": 39,
+   "protein": 0.8,
+   "fat": 0.9,
+   "carb": 7.0,
+   "category": "小鉢"
+  },
+  {
+   "name": "豚汁",
+   "price": 110,
+   "sizes": {},
+   "energy": 71,
+   "protein": 4.8,
+   "fat": 3.0,
+   "carb": 8.0,
+   "category": "汁物"
+  },
+  {
+   "name": "フルーツミックスヨーグルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 51,
+   "protein": 1.5,
+   "fat": 1.2,
+   "carb": 9.6,
+   "category": "デザート"
+  },
+  {
+   "name": "焼きプリンタルト",
+   "price": 99,
+   "sizes": {},
+   "energy": 117,
+   "protein": 1.8,
+   "fat": 6.5,
+   "carb": 12.5,
+   "category": "デザート"
+  }
+ ]
+}
